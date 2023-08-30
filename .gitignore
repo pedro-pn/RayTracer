@@ -1,0 +1,6 @@
+*.o
+rayrtacer
+*.a
+*.out
+.vscode
+test
