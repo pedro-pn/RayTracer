@@ -10,42 +10,42 @@ SUITE(ALGEBRA_TEST) {
 	TEST(POINT_TEST) {
 		Point	p = point(4.3, -4.2, 3.1);
 
-		TestTuple(p, 4.3, -4.2, 3.1, 1);
+		TestTuple(p, 4.3, -4.2, 3.1, POINT);
 	}
 
 	TEST(VECTOR_TEST) {
 		Vec v = vector(4.3, -4.2, 3.1);
 
-		TestTuple(v, 4.3, -4.2, 3.1, 0);
+		TestTuple(v, 4.3, -4.2, 3.1, VECTOR);
 	}
 
 	TEST(SUBTRACT_POINTS) {
 		Point	p1 = point(3, 2, 1);
 		Point	p2 = point(5, 6, 7);
 
-		TestTuple(p1 - p2, -2, -4, -6, 0);
+		TestTuple(p1 - p2, -2, -4, -6, VECTOR);
 	}
 
 	TEST(SUBTRACT_VEC_FROM_POINT) {
 		Point	p = point(3, 2, 1);
 		Vec		v = vector(5, 6, 7);
 
-		TestTuple(p - v, -2, -4, -6, 1);
+		TestTuple(p - v, -2, -4, -6, POINT);
 	}
 
 	TEST(SUBTRACT_TWO_VECTORS) {
 		Vec	v1 = vector(3, 2, 1);
 		Vec	v2 = vector(5, 6, 7);
 
-		TestTuple(v1 - v2, -2, -4, -6, 0);
+		TestTuple(v1 - v2, -2, -4, -6, VECTOR);
 	}
 
 	TEST(NEGATING_TUPLE) {
 		Vec	zero;
 		Vec	v = vector(1, -2, 3);
 
-		TestTuple(zero - v, -1, 2, -3, 0);
-		TestTuple(-v, -1, 2, -3, 0);
+		TestTuple(zero - v, -1, 2, -3, VECTOR);
+		TestTuple(-v, -1, 2, -3, VECTOR);
 	}
 
 	TEST(SCALAR_MULTIPLICATION_DIVISION) {
@@ -77,10 +77,10 @@ SUITE(ALGEBRA_TEST) {
 
 	TEST(NORMALIZE_TEST) {
 		Vec v = vector(4, 0, 0);
-		TestTuple(v.normalize(), 1, 0, 0, 0);
+		TestTuple(v.normalize(), 1, 0, 0, VECTOR);
 
 		v = vector(1, 2, 3);
-		TestTuple(v.normalize(), 1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14), 0);
+		TestTuple(v.normalize(), 1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14), VECTOR);
 
 		CHECK_CLOSE((v.normalize()).magnitude(), 1, EPSILON);
 	}
@@ -96,8 +96,8 @@ SUITE(ALGEBRA_TEST) {
 		Vec a = vector(1, 2, 3);
 		Vec b = vector(2, 3, 4);
 
-		TestTuple(cross(a, b), -1, 2, -1, 0);
-		TestTuple(cross(b, a), 1, -2, 1, 0);
+		TestTuple(cross(a, b), -1, 2, -1, VECTOR);
+		TestTuple(cross(b, a), 1, -2, 1, VECTOR);
 	}
 }
 
