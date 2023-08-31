@@ -1,7 +1,6 @@
 #ifndef ALGEBRA_H
 # define ALGEBRA_H
 
-# include "Vec.hpp"
-# include "Point.hpp"
+# include "Tuple.hpp"
 
 #endif /* ALGEBRA_H*/
