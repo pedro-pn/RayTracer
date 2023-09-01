@@ -8,7 +8,7 @@ OBJS = ${addprefix ${OBJS_PATH}/, ${notdir ${SOURCES:.cpp=.o}}}
 VPATH :=	${SRCS_PATH} ${SRCS_PATH}/main ${SRCS_PATH}/file
 CC = g++
 FLAGS =  -Wextra -Wextra -Wall -O3
-INCLUDE = -I include -I ${wildcard srcs/*}
+INCLUDE = -I include ${addprefix -I , ${wildcard srcs/*}}
 
 NAME_WILD = raytracer
 NAME_ARCHIVE = raytracer.a
