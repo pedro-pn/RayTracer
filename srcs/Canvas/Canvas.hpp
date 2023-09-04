@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include "algebra.h"
+# include "ColorUtils.hpp"
 
 using namespace std;
 
@@ -26,6 +27,8 @@ class Canvas {
 		int		getPixel(int width, int height) const;
 		void	writePixel(int width, int height, Color color);
 
+		void	saveToPPM(string const &fileName);
+
 	private:
 
 		int	*_image;
@@ -33,6 +36,9 @@ class Canvas {
 		int	_height;
 		int	_size;
 
+		string	_makePPMBuffer(void);
+		void	_makePPMHeader(stringstream &buffer);
+		
 };
 
 #endif /* CANVAS_HPP */

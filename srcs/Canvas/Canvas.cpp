@@ -1,5 +1,7 @@
 #include "Canvas.hpp"
 #include <cstring>
+#include <fstream>
+#include <sstream>
 
 Canvas::Canvas(int width, int height) : _width(width), _height(height), _size(width * height) {
 	this->_image = new int[height * width];
@@ -62,4 +64,39 @@ int		Canvas::getPixel(int width, int height) const {
 
 void	Canvas::writePixel(int width, int height, Color color) {
 	this->_image[(height * _height) + width] = ColorUtils::makeColor(color);
+}
+
+void	Canvas::saveToPPM(string const &fileName) {
+	fstream		file;
+	std::string	fileContent;
+
+	file.open(fileName, ios::out);
+	if (file.fail())
+		throw runtime_error("Cannot create file '" + fileName + "'");
+	fileContent = _makePPMBuffer();
+	file.write(fileContent.c_str(), fileContent.size());
+	file.close();
+}
+
+string	Canvas::_makePPMBuffer(void) {
+	stringstream	buffer;
+	int				red, green, blue;
+
+	_makePPMHeader(buffer);
+	for (int y = 0; y < _height; y++) {
+		for(int x = 0; x < _width; x++) {
+			red = ColorUtils::_getRed(getPixel(x, y));
+			green = ColorUtils::_getGreen(getPixel(x, y));
+			blue = ColorUtils::_getBlue(getPixel(x, y));
+			buffer << red << " " << green << " " << blue;
+			if (x != _width - 1)
+				buffer << " ";
+		}
+		buffer << "\n";
+	}
+	return (move(buffer.str()));
+}
+
+void	Canvas::_makePPMHeader(stringstream &buffer) {
+	buffer << "P3\n" << _width << " " << _height << "\n" << 255 << "\n";
 }

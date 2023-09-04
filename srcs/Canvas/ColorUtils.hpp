@@ -14,14 +14,14 @@ class ColorUtils {
 
 		static int	makeColor(Color tcolor);
 
-	private:
-
-		ColorUtils();
-
 		static int	_getRed(int color);
 		static int	_getGreen(int color);
 		static int	_getBlue(int color);
-		static int	_ColorToRgb(int color);
+		static int	_ColorToRgb(double color);
+
+	private:
+
+		ColorUtils();
 };
 
 #endif /* COLORUTILS_HPP */

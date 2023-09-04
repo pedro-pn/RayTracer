@@ -4,3 +4,4 @@ rayrtacer
 *.out
 .vscode
 test
+*.ppm

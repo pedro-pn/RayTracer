@@ -1,4 +1,5 @@
 #include "ColorUtils.hpp"
+#include <cmath>
 
 ColorUtils::ColorUtils() {
 }
@@ -17,12 +18,12 @@ int	ColorUtils::makeColor(Color color) {
 	return (red << 16 | green << 8 | blue);
 }
 
-int	ColorUtils::_ColorToRgb(int color) {
+int	ColorUtils::_ColorToRgb(double color) {
 	if (color < 0)
 		return (COLORMIN);
 	else if (color > 1)
 		return (COLORMAX);
-	return (color * COLORMAX);
+	return (ceil(color * COLORMAX));
 }
 
 int	ColorUtils::_getRed(int color) {
