@@ -80,22 +80,12 @@ ostream&	operator<<(ostream &o, Tuple const &tuple) {
 	return (o);
 }
 
-Tuple	operator*(double n, Tuple const &tuple) {
-	return (tuple * n);
-} //Vec(vec.x * n, vec.y * n, vec.z *n)
-Tuple	operator*(Tuple const &tuple, double n) {
+Tuple	operator*(double n, Tuple &tuple) {
 	return (tuple * n);
 }
 
-Vec	operator*(Vec const &vec, Vec const &vec2) {
-	return (Vec(vec.x * vec2.x, vec.y * vec2.y, vec.z * vec2.z, vec.w * vec2.w));
-}
-
-Tuple	operator/(double n, Tuple const &tuple) {
-	return (tuple / n);
-}
-Tuple	operator/(Tuple const &tuple, double n) {
-	return (tuple / n);
+Tuple	operator*(Tuple const &tuple, Tuple const &tuple2) {
+	return (Tuple(tuple.x * tuple2.x, tuple.y * tuple2.y, tuple.z * tuple2.z, tuple.w * tuple2.w));
 }
 
 double	dot(Vec const &vec1, Vec const &vec2) {
@@ -112,6 +102,10 @@ Vec	vector(double x, double y, double z) {
 	return (Vec(x, y, z, VECTOR));
 }
 
-Point point(double x, double y, double z) {
+Point	point(double x, double y, double z) {
 	return (Point(x, y, z, POINT));
+}
+
+Color	color(double red, double green, double blue) {
+	return (Color(red, green, blue, COLOR));
 }

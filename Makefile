@@ -8,7 +8,7 @@ OBJS = ${addprefix ${OBJS_PATH}/, ${notdir ${SOURCES:.cpp=.o}}}
 VPATH :=	${SRCS_PATH} ${SRCS_PATH}/main ${SRCS_PATH}/file
 CC = g++
 FLAGS =  -Wextra -Wextra -Wall -O3
-INCLUDE = -I include -I ${wildcard srcs/*}
+INCLUDE = -I include ${addprefix -I , ${wildcard srcs/*}}
 
 NAME_WILD = raytracer
 NAME_ARCHIVE = raytracer.a
@@ -43,10 +43,15 @@ run: m
 ${MAIN_TEST_OBJ}: ${MAIN_TEST}
 				@ ${CC} ${FLAGS} ${INCLUDE} -l UnitTest++ -c $< -o $@
 
-tests: fclean dirs ${NAME_ARCHIVE} ${MAIN_TEST_OBJ}
+tests: test
+		./${TEST}
+
+valtests: test
+		valgrind --leak-check=full --show-leak-kinds=all ./${TEST}
+
+test: fclean dirs ${NAME_ARCHIVE} ${MAIN_TEST_OBJ}
 		@ ${CC} ${INCLUDE} ${MAIN_TEST_OBJ} ${NAME_ARCHIVE} ${FLAGS} -lUnitTest++  -o ${TEST}
 		rm objects/test.o
-		./${TEST}
 
 dirs:
 		mkdir -p ${OBJECTS_W_PATH} ${OBJECTS_T_PATH}
@@ -57,8 +62,6 @@ clean:
 fclean: clean
 		rm -rf ${NAME_ARCHIVE} ${TEST}
 		rm -rf ${NAME_WILD}
-
-
 
 show:
 	echo ${INCLUDE}

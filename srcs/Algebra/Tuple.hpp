@@ -6,7 +6,7 @@
 using namespace std;
 
 enum eTupleType {
-	VECTOR, POINT
+	VECTOR, POINT, COLOR = 0
 };
 
 class Tuple {
@@ -39,15 +39,14 @@ class Tuple {
 
 using Vec = Tuple;
 using Point = Tuple;
+using Color = Tuple;
 
 Vec			vector(double x, double y, double z);
 Point		point(double x, double y, double z);
+Color		color(double red, double green, double z);
 
-Tuple		operator*(double n, Tuple const &vec);
-Tuple		operator*(Tuple const &vec, double n);
-Tuple		operator/(double n, Tuple const &vec);
-Tuple		operator/(Tuple const &vec, double n);
-Vec			operator*(Vec const &vec, Vec const &vec2);
+Tuple		operator*(double n, Tuple &Tuple);
+Tuple		operator*(Tuple const &tuple, Tuple const &tuple2);
 Vec			cross(Vec const &vec1, Vec const &vec2);
 double		dot(Vec const &vec1, Vec const &vec2);
 

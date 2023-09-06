@@ -23,29 +23,29 @@ SUITE(ALGEBRA_TEST) {
 		Point	p1 = point(3, 2, 1);
 		Point	p2 = point(5, 6, 7);
 
-		TestTuple(p1 - p2, -2, -4, -6, VECTOR);
+		CheckTuple(vector(-2, -4, -6), p1 - p2);
 	}
 
 	TEST(SUBTRACT_VEC_FROM_POINT) {
 		Point	p = point(3, 2, 1);
 		Vec		v = vector(5, 6, 7);
 
-		TestTuple(p - v, -2, -4, -6, POINT);
+		CheckTuple(point(-2, -4, -6), p - v);
 	}
 
 	TEST(SUBTRACT_TWO_VECTORS) {
 		Vec	v1 = vector(3, 2, 1);
 		Vec	v2 = vector(5, 6, 7);
 
-		TestTuple(v1 - v2, -2, -4, -6, VECTOR);
+		CheckTuple(vector(-2, -4, -6), v1 - v2);
 	}
 
 	TEST(NEGATING_TUPLE) {
 		Vec	zero;
 		Vec	v = vector(1, -2, 3);
 
-		TestTuple(zero - v, -1, 2, -3, VECTOR);
-		TestTuple(-v, -1, 2, -3, VECTOR);
+		CheckTuple(vector(-1, 2, -3), zero - v);
+		CheckTuple(vector(-1, 2, -3), -v);
 	}
 
 	TEST(SCALAR_MULTIPLICATION_DIVISION) {
@@ -77,10 +77,12 @@ SUITE(ALGEBRA_TEST) {
 
 	TEST(NORMALIZE_TEST) {
 		Vec v = vector(4, 0, 0);
-		TestTuple(v.normalize(), 1, 0, 0, VECTOR);
+		Vec expt = vector(1, 0, 0);
+		CheckTuple(expt, v.normalize());
 
 		v = vector(1, 2, 3);
-		TestTuple(v.normalize(), 1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14), VECTOR);
+		expt = vector(1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14));
+		CheckTuple(expt, v.normalize());
 
 		CHECK_CLOSE((v.normalize()).magnitude(), 1, EPSILON);
 	}
@@ -96,10 +98,39 @@ SUITE(ALGEBRA_TEST) {
 		Vec a = vector(1, 2, 3);
 		Vec b = vector(2, 3, 4);
 
-		TestTuple(cross(a, b), -1, 2, -1, VECTOR);
-		TestTuple(cross(b, a), 1, -2, 1, VECTOR);
+		CheckTuple(vector(-1, 2, -1), cross(a, b));
+		CheckTuple(vector(1, -2, 1), cross(b, a));
+	}
+
+	TEST(ADD_COLORS_TEST) {
+		Color c1 = color(0.9, 0.6, 0.75);
+		Color c2 = color(0.7, 0.1, 0.25);
+
+		Color expt = color(1.6, 0.7, 1.0);
+		CheckTuple(expt, c1 + c2);
+	}
+
+	TEST(SUBTRACTING_COLORS_TEST) {
+		Color c1 = color(0.9, 0.6, 0.75);
+		Color c2 = color(0.7, 0.1, 0.25);
+
+		Color expt = color(0.2, 0.5, 0.5);
+		CheckTuple(expt, c1 - c2);
+	}
+
+	TEST(MULTIPLYING_COLORS_BY_SCALAR_TEST) {
+		Color c1 = color(0.2, 0.3, 0.4);
+
+		CheckTuple(color(0.4, 0.6, 0.8), 2 * c1);
+	}
+
+	TEST(MULTIPLYING_COLORS_TEST) {
+		Color c1 = color(1, 0.2, 0.4);
+		Color c2 = color(0.9, 1, 0.1);
+
+		Color expt = color(0.9, 0.2, 0.04);
+		CheckTuple(expt, c1 * c2);
 	}
 }
-
 
 #endif /* ALGEBRATEST_HPP */
