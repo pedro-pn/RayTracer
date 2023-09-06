@@ -1,7 +1,7 @@
 #ifndef COLORUTILS_HPP
 # define COLORUTILS_HPP
 
-# include "algebra.h"
+# include "algebra.hpp"
 
 # define COLORMAX 255
 # define COLORMIN 0

@@ -2,7 +2,7 @@
 # define CANVAS_HPP
 
 # include <iostream>
-# include "algebra.h"
+# include "algebra.hpp"
 # include "ColorUtils.hpp"
 
 using namespace std;

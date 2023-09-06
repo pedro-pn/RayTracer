@@ -1,7 +1,7 @@
 #ifndef ALGEBRATEST_HPP
 # define ALGEBRATEST_HPP
 
-# include "../include/algebra.h"
+# include "../include/algebra.hpp"
 # include <UnitTest++/UnitTest++.h>
 # include "TestUtils.hpp"
 #include <math.h>
@@ -130,6 +130,70 @@ SUITE(ALGEBRA_TEST) {
 
 		Color expt = color(0.9, 0.2, 0.04);
 		CheckTuple(expt, c1 * c2);
+	}
+}
+
+SUITE(MATRIX_TEST) {
+	TEST(twobytwoTEST) {
+		Matrix	m;
+		m[0][0] = -3;
+		m[0][1] = 5;
+		m[1][0] = 1;
+		m[1][1] = -2;
+		
+		CHECK_CLOSE(-3, m[0][0], EPSILON);
+		CHECK_CLOSE(5, m[0][1], EPSILON);
+		CHECK_CLOSE(1, m[1][0], EPSILON);
+		CHECK_CLOSE(-2, m[1][1], EPSILON);
+		CHECK_CLOSE(0, m[1][2], EPSILON);
+	}
+
+	TEST(TEST_EQUAL_OPERATOR) {
+		bool	isEqual;
+		Matrix a((t_setMatrix){
+			1, 2, 3, 4,
+			5, 6, 7, 8,
+			9, 8, 7, 6,
+			5, 4, 3, 2
+		});
+		Matrix b((t_setMatrix){
+			1, 2, 3, 4,
+			5, 6, 7, 8,
+			9, 8, 7, 6,
+			5, 4, 3, 2
+		});
+
+		isEqual = a == b;
+
+		CHECK(isEqual);
+	}
+
+	TEST(MATRIX_MULTIPLICATION) {
+		Matrix a((t_setMatrix) {
+			1, 2, 3, 4,
+			5, 6, 7, 8,
+			9, 8, 7, 6,
+			5, 4, 3, 2
+		});
+
+		Matrix b((t_setMatrix) {
+			-2, 1, 2, 3,
+			3, 2, 1, -1,
+			4, 3, 6, 5,
+			1, 2, 7, 8
+		});
+
+		Matrix	expected((t_setMatrix) {
+			20, 22, 50 ,48,
+			44, 54, 114, 108,
+			40, 58, 110, 102,
+			16, 26, 46 ,42
+		});
+
+		Matrix result = a * b;
+
+		bool	isEqual = result == expected;
+		CHECK(isEqual);
 	}
 }
 

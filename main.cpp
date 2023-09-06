@@ -1,4 +1,4 @@
-#include "algebra.h"
+#include "algebra.hpp"
 
 int	main() {
 	Vec	vector(1, 2, 3);
