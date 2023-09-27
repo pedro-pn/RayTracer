@@ -1,5 +1,6 @@
 #include "Matrix.hpp"
 #include <exception>
+#include <cstring>
 
 Matrix::Matrix() : matrix{0} {
 }
@@ -57,6 +58,14 @@ Matrix	Matrix::operator*(Matrix const &rhs) const {
 		}
 	}
 	return (result);
+}
+
+void	Matrix::setIdentity(void) {
+	bzero(this->matrix, 16 * sizeof(double));
+	this->matrix[0][0] = 1;
+	this->matrix[1][1] = 1;
+	this->matrix[2][2] = 1;
+	this->matrix[3][3] = 1;
 }
 
 ostream	&operator<<(ostream &o, Matrix const &rhs) {

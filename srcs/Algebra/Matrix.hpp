@@ -27,6 +27,8 @@ class Matrix {
 		bool	operator==(Matrix const &rhs) const;
 		Matrix	operator*(Matrix const &rhs) const;
 
+		void	setIdentity(void);
+
 		friend	ostream	&operator<<(ostream &o, Matrix const &rhs);
 
 	private:

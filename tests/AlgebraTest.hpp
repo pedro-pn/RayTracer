@@ -195,6 +195,42 @@ SUITE(MATRIX_TEST) {
 		bool	isEqual = result == expected;
 		CHECK(isEqual);
 	}
+
+	TEST(Matrix_tuple_multiplication) {
+		Matrix	a((t_setMatrix) {
+			1 ,2 ,3, 4,
+			2, 4, 4, 2,
+			8, 6, 4, 1,
+			0, 0, 0, 1
+		});
+
+		Tuple	b(1, 2, 3, 1);
+		Tuple	result = a * b;
+
+		CheckTuple(Tuple(18, 24, 33, 1), result);
+	}
+
+	TEST(Identity_matrix_test) {
+		Matrix a;
+		Matrix	b((t_setMatrix) {
+			1 ,2 ,3, 4,
+			2, 4, 4, 2,
+			8, 6, 4, 1,
+			0, 0, 0, 1
+		});
+		Matrix	expected((t_setMatrix) {
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1
+		});
+
+		a.setIdentity();
+		b.setIdentity();
+		CHECK(a == expected);
+		CHECK(b == expected);
+		
+	}
 }
 
 #endif /* ALGEBRATEST_HPP */
