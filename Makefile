@@ -7,7 +7,7 @@ SRCS = ${addprefix ${SRCS_PATH}/, ${SOURCES}}
 OBJS = ${addprefix ${OBJS_PATH}/, ${notdir ${SOURCES:.cpp=.o}}}
 VPATH :=	${SRCS_PATH} ${SRCS_PATH}/main ${SRCS_PATH}/file
 CC = g++
-FLAGS =  -Wextra -Wextra -Wall -O3
+FLAGS =  -g -Wextra -Wextra -Wall -O3
 INCLUDE = -I include ${addprefix -I , ${wildcard srcs/*}}
 
 NAME_WILD = raytracer
@@ -47,7 +47,7 @@ tests: test
 		./${TEST}
 
 valtests: test
-		valgrind --leak-check=full --show-leak-kinds=all ./${TEST}
+		valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./${TEST}
 
 test: fclean dirs ${NAME_ARCHIVE} ${MAIN_TEST_OBJ}
 		@ ${CC} ${INCLUDE} ${MAIN_TEST_OBJ} ${NAME_ARCHIVE} ${FLAGS} -lUnitTest++  -o ${TEST}

@@ -5,7 +5,7 @@
 
 Canvas::Canvas(int width, int height) : _width(width), _height(height), _size(width * height) {
 	this->_image = new int[height * width];
-	bzero(this->_image, _size);
+	bzero(this->_image, _size * sizeof(int));
 }
 
 Canvas::~Canvas() {
@@ -14,7 +14,7 @@ Canvas::~Canvas() {
 }
 
 Canvas::Canvas(Canvas const &rhs) : _width(rhs._width), _height(rhs._height), _size(rhs._size) {
-	this->_image = new int[_size];
+	this->_image = new int[_size * sizeof(int)];
 	for (int i = 0; i < _size; i++)
 		this->_image[i] = rhs._image[i];
 }
@@ -27,7 +27,7 @@ Canvas	&Canvas::operator=(Canvas const &rhs) {
 	this->_size = rhs._size;
 	this->_width = rhs._width;
 	this->_height = rhs._height;
-	this->_image = new int[_size];
+	this->_image = new int[_size * sizeof(int)];
 	for (int i = 0; i < _size; i++)
 		this->_image[i] = rhs._image[i];
 	return (*this);
