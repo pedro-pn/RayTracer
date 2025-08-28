@@ -229,8 +229,218 @@ SUITE(MATRIX_TEST) {
 		b.setIdentity();
 		CHECK(a == expected);
 		CHECK(b == expected);
+	}
+
+	TEST(transposing_matrix_test) {
+		Matrix a ((t_setMatrix){
+			0, 9, 3, 0,
+			9, 8, 0, 8,
+			1, 8, 5, 3,
+			0, 0, 5, 8
+		});
+		Matrix b = a.transpose();
+
+		Matrix expected((t_setMatrix) {
+			0, 9, 1, 0,
+			9, 8, 8, 0,
+			3, 0, 5, 5,
+			0, 8, 3, 8
+		});
+
+		CHECK(b == expected);
+	}
+
+	TEST(inverting_matrix_test) {
+		Matrix a((t_setMatrix){
+			1, 5, 0, 0,
+			-3, 2, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0
+		}, 2);
+
+		double determinant = a.determinant();
+
+		CHECK(determinant == 17);
+	}
+
+	TEST(submatrix_3by3) {
+		Matrix a ((t_setMatrix) {
+			1, 5, 0, 0,
+			-3, 2, 7, 0,
+			0, 6, -3, 0,
+			0, 0, 0, 0
+		});
+
+		Matrix submatrix = a.submatrix(0, 2);
+
+		Matrix expected((t_setMatrix){
+			-3, 2, 0, 0,
+			0, 6, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0
+		});
+
+		Matrix b((t_setMatrix) {
+			-6, 1, 1, 6,
+			-8, 5, 8, 6,
+			-1, 0, 8, 2,
+			-7, 1, -1, 1
+		});
+
+		Matrix submatrix2 = b.submatrix(2, 1);
+
+		Matrix expected2((t_setMatrix){
+			-6, 1, 6, 0,
+			-8, 8, 6, 0,
+			-7, -1, 1, 0,
+			0, 0, 0, 0
+		}, 3);
 		
+		CHECK(submatrix == expected);
+		CHECK(submatrix2 == expected2);
+	}
+
+	TEST(calculating_3x3_minor) {
+		Matrix a((t_setMatrix) {
+			3, 5, 0, 0,
+			2, -1, -7, 0,
+			6, -1, 5, 0,
+			0, 0, 0, 0
+		}, 3);
+
+		Matrix submatrix = a.submatrix(1, 0);
+		double determinant = submatrix.determinant();
+		double minor = a.minor(1, 0);
+
+		CHECK(minor == 25);
+		CHECK(determinant == 25);
+	}
+
+	TEST(calculating_3x3_cofactor) {
+		Matrix a((t_setMatrix) {
+			3, 5, 0, 0,
+			2, -1, -7, 0,
+			6, -1, 5, 0,
+			0, 0, 0, 0
+		}, 3);
+
+		double minor = a.minor(0, 0);
+		double cofactor = a.cofactor(0, 0);
+		double minor2 = a.minor(1, 0);
+		double cofactor2 = a.cofactor(1, 0);
+
+		CHECK(minor == -12);
+		CHECK(cofactor == -12);
+		CHECK(minor2 == 25);
+		CHECK(cofactor2 == -25);
+	}
+
+	TEST(calculating_3x3_determinant) {
+		Matrix a((t_setMatrix) {
+			1, 2, 6, 0,
+			-5, 8, -4, 0,
+			2, 6, 4, 0,
+			0, 0, 0, 0
+		}, 3);
+
+		CHECK(a.cofactor(0, 0) == 56);
+		CHECK(a.cofactor(0, 1) == 12);
+		CHECK(a.cofactor(0, 2) == -46);
+		CHECK(a.determinant() == -196);
+	}
+
+	TEST(calculating_4x4_determinant) {
+		Matrix a((t_setMatrix) {
+			-2, -8, 3, 5,
+			-3, 1, 7, 3,
+			1, 2, -9, 6,
+			-6, 7, 7, -9
+		});
+
+		CHECK(a.cofactor(0, 0) == 690);
+		CHECK(a.cofactor(0, 1) == 447);
+		CHECK(a.cofactor(0, 2) == 210);
+		CHECK(a.cofactor(0, 3) == 51);
+		CHECK(a.determinant() == -4071);
+	}
+
+	TEST(calculating_inverse_matrix) {
+		Matrix a((t_setMatrix) {
+			-5, 2, 6, -8,
+			1, -5, 1, 8,
+			7, 7, -6, -7,
+			1, -3, 7, 4
+		});
+
+		Matrix expected((t_setMatrix) {
+			0.21805, 0.45113, 0.24060, -0.04511,
+			-0.80827, -1.45677, -0.44361, 0.52068,
+			-0.07895, -0.22368, -0.05263, 0.19737,
+			-0.52256, -0.81391, -0.30075, 0.30639
+		});
+
+		Matrix b = a.inverse();
+
+		CHECK(areEqual(a.determinant(), 532.0));
+		CHECK(areEqual(a.cofactor(2, 3), -160.0));
+		CHECK(areEqual(b[3][2], -160.0/532.0));
+		CHECK(areEqual(a.cofactor(3, 2), 105.0));
+		CHECK(areEqual((b[2][3]), 105.0/532.0));
+		CHECK(b == expected);
+
+		Matrix c((t_setMatrix){
+			8, -5, 9, 2,
+			7, 5, 6, 1,
+			-6, 0, 9, 6,
+			-3, 0, -9, -4
+		});
+
+		Matrix cExpected((t_setMatrix){
+			-0.15385, -0.15385, -0.28205, -0.53846,
+			-0.07692, 0.12308, 0.02564, 0.03077,
+			0.35897, 0.35897, 0.43590, 0.92308,
+			-0.69231, -0.69231, -0.76923, -1.92308
+		});
+
+		CHECK(c.inverse() == cExpected);
+
+		Matrix	d((t_setMatrix){
+			9, 3, 0, 9,
+			-5, -2, -6, -3,
+			-4, 9, 6, 4,
+			-7, 6, 6, 2
+		});
+
+		Matrix	dExpected((t_setMatrix) {
+			-0.04074, -0.07778, 0.14444, -0.22222,
+			-0.07778, 0.03333, 0.36667, -0.33333,
+			-0.02901, -0.14630, -0.10926, 0.12963,
+			0.17778, 0.06667, -0.26667, 0.33333
+		});
+
+		CHECK(dExpected == d.inverse());
+	}
+
+	TEST(multiplying_product_by_its_inverse) {
+		Matrix	a((t_setMatrix) {
+			3, -9, 7, 3,
+			3, -8, 2, -9,
+			-4, 4, 4, 1,
+			-6, 5, -1, 1
+		});
+
+		Matrix	b((t_setMatrix) {
+			8, 2, 2, 2,
+			3, -1, 7, 0,
+			7, 0, 5, 4,
+			6, -2, 0, 5
+		});
+
+		Matrix c = a * b;
+		CHECK((c * b.inverse()) == a);
 	}
 }
+
+
 
 #endif /* ALGEBRATEST_HPP */
