@@ -94,7 +94,7 @@ string	Canvas::_makePPMBuffer(void) {
 		}
 		buffer << "\n";
 	}
-	return (move(buffer.str()));
+	return (buffer.str());
 }
 
 void	Canvas::_makePPMHeader(stringstream &buffer) {
