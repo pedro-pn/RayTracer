@@ -20,11 +20,12 @@ class Tuple {
 
 		Tuple	&operator=(Tuple const &rhs);
 		// Tuple	&&operator=(Tuple &rhs) noexcept;
-		Tuple	operator+(Tuple const &rhs);
-		Tuple	operator-(Tuple const &rhs);
-		Tuple	operator-();
-		Tuple	operator*(double n);
-		Tuple	operator/(double n);
+		Tuple	operator+(Tuple const &rhs) const;
+		Tuple	operator-(Tuple const &rhs) const;
+		Tuple	operator-() const;
+		Tuple	operator*(double n) const;
+		Tuple	operator/(double n) const;
+		bool	operator==(Tuple const &rhs) const;
 		
 		double		magnitude(void) const;
 		Tuple		normalize() const;

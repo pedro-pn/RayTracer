@@ -1,5 +1,5 @@
 #include "Tuple.hpp"
-
+#include "algebra.hpp"
 #include <cmath>
 
 Tuple::Tuple() : x(0), y(0), z(0), w(0) {
@@ -28,7 +28,7 @@ Tuple	&Tuple::operator=(Tuple const &rhs) {
 	return (*this);
 }
 
-Tuple	Tuple::operator+(Tuple const &rhs) {
+Tuple	Tuple::operator+(Tuple const &rhs) const {
 	double x, y, z, w;
 
 	x = this->x + rhs.x;
@@ -38,7 +38,7 @@ Tuple	Tuple::operator+(Tuple const &rhs) {
 	return (Tuple(x, y, z, w));
 }
 
-Tuple	Tuple::operator-(Tuple const &rhs) {
+Tuple	Tuple::operator-(Tuple const &rhs) const {
 	double x, y, z, w;
 
 	x = this->x - rhs.x;
@@ -48,16 +48,20 @@ Tuple	Tuple::operator-(Tuple const &rhs) {
 	return (Tuple(x, y, z, w));
 }
 
-Tuple	Tuple::operator-() {
+Tuple	Tuple::operator-() const{
 	return (Tuple(0, 0, 0, 0) - *this);
 }
 
-Tuple	Tuple::operator*(double n) {
+Tuple	Tuple::operator*(double n) const {
 	return (Tuple(this->x * n, this->y * n, this->z * n, this->w * n));
 }
 
-Tuple	Tuple::operator/(double n) {
+Tuple	Tuple::operator/(double n) const {
 	return (Tuple(this->x / n, this->y / n, this->z / n, this->w / n));
+}
+
+bool	Tuple::operator==(Tuple const &rhs) const {
+	return (areEqual(this->x, rhs.x) && areEqual(this->y, rhs.y) && areEqual(this->z, rhs.z) && areEqual(this->w, rhs.w));
 }
 
 double	Tuple::magnitude(void) const {
