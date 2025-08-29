@@ -439,8 +439,194 @@ SUITE(MATRIX_TEST) {
 		Matrix c = a * b;
 		CHECK((c * b.inverse()) == a);
 	}
+
+	TEST(mulplying_point_by_translation_matrix) {
+		Matrix transform = translation(5, -3, 2);
+		Point	p = point(-3, 4, 5);
+
+		Point expected = point(2, 1, 7);
+
+		CHECK((transform * p) == expected);
+	}
+
+	TEST(multiplying_by_inverse_translation_matrix) {
+		Matrix transform = translation(5, -3, 2);
+		Point	p = point(-3, 4, 5);
+		Matrix	inverseTransform = transform.inverse();
+		Point expected = point(-8, 7, 3);
+
+		CHECK((inverseTransform * p) == expected);
+	}
+
+	TEST(translation_does_not_affect_vectors) {
+		Matrix &&transform = translation(5, -3, 2);
+		Vec		v = vector(-3, 4, 5);
+
+		CHECK((transform * v) == v);
+	}
+
+	TEST(multiplying_point_by_scaling_matrix) {
+		Matrix transform = scaling(2, 3, 4);
+		Point	p = point(-4, 6, 8);
+
+		CHECK((transform * p) == point(-8, 18, 32));
+	}
+
+	TEST(multiplying_vec_by_scaling_matrix) {
+		Matrix transform = scaling(2, 3, 4);
+
+		Vec	v = vector(-4, 6, 8);
+
+		CHECK((transform * v) == vector(-8, 18, 32));
+	}
+
+	TEST(multiply_by_invese_of_scaling_matrix) {
+		Matrix transform = scaling(2, 3, 4);
+
+		Matrix inverse = transform.inverse();
+		Vec	v = vector(-4, 6, 8);
+
+		CHECK((inverse * v) == vector(-2, 2, 2));
+	}
+
+	TEST(scaling_by_negative) {
+		Matrix transform = scaling(-1, 1, 1);
+
+		Matrix inverse = transform.inverse();
+		Point	p = point(2, 3 , 4);
+
+		CHECK((inverse * p) == point(-2, 3, 4));
+	}
+
+	TEST(rotating_point_around_x_axis) {
+		Point	p = point(0, 1, 0);
+
+		Matrix	half_quarter = rotationX(M_PI / 4.0);
+		Matrix	full_quarter = rotationX(M_PI / 2.0);
+		Point	result = half_quarter * p;
+		CHECK(result == point(0, sqrt(2.0) / 2.0, sqrt(2.0) / 2.0));
+		CHECK((full_quarter * p) == point(0, 0, 1));
+	}
+	
+	TEST(inverse_of_x_rotation) {
+		Point p = point(0, 1, 0);
+		
+		Matrix half_quarter = rotationX(M_PI / 4);
+		Matrix	inverse = half_quarter.inverse();
+		
+		CHECK((inverse * p) == point(0, sqrt(2) / 2, -sqrt(2) / 2));
+	}
+
+	TEST(rotating_point_around_y_axis) {
+		Point	p = point(0, 0, 1);
+	
+		Matrix	half_quarter = rotationY(M_PI / 4.0);
+		Matrix	full_quarter = rotationY(M_PI / 2.0);
+
+		CHECK((half_quarter * p) == point(sqrt(2.0) / 2.0, 0, sqrt(2.0) / 2.0));
+		CHECK((full_quarter * p) == point(1, 0, 0));
+	}
+
+	TEST(rotating_point_around_z_axis) {
+		Point	p = point(0, 1, 0);
+	
+		Matrix	half_quarter = rotationZ(M_PI / 4.0);
+		Matrix	full_quarter = rotationZ(M_PI / 2.0);
+
+		CHECK((half_quarter * p) == point(-sqrt(2.0) / 2.0, sqrt(2.0) / 2.0, 0));
+		CHECK((full_quarter * p) == point(-1, 0, 0));
+	}
+
+	TEST(shearing_transformation_moves_x_proportion_to_y) {
+		Matrix	transform = shearing(1, 0, 0, 0, 0, 0);
+
+		Point	p = point(2, 3, 4);
+
+		CHECK((transform * p) == point(5, 3, 4));
+	}
+
+	TEST(shearing_transformation_moves_x_proportion_to_z) {
+		Matrix	transform = shearing(0, 1, 0, 0, 0, 0);
+
+		Point	p = point(2, 3, 4);
+
+		CHECK((transform * p) == point(6, 3, 4));
+	}
+
+	TEST(shearing_transformation_moves_y_proportion_to_x) {
+		Matrix	transform = shearing(0, 0, 1, 0, 0, 0);
+
+		Point	p = point(2, 3, 4);
+
+		CHECK((transform * p) == point(2, 5, 4));
+	}
+
+	TEST(shearing_transformation_moves_y_proportion_to_z) {
+		Matrix	transform = shearing(0, 0, 0, 1, 0, 0);
+
+		Point	p = point(2, 3, 4);
+
+		CHECK((transform * p) == point(2, 7, 4));
+	}
+
+	TEST(shearing_transformation_moves_z_proportion_to_x) {
+		Matrix	transform = shearing(0, 0, 0, 0, 1, 0);
+
+		Point	p = point(2, 3, 4);
+
+		CHECK((transform * p) == point(2, 3, 6));
+	}
+
+	TEST(shearing_transformation_moves_z_proportion_to_y) {
+		Matrix	transform = shearing(0, 0, 0, 0, 0, 1);
+
+		Point	p = point(2, 3, 4);
+
+		CHECK((transform * p) == point(2, 3, 7));
+	}
+
+	TEST(individual_transformations_in_sequence) {
+		Point	p = point(1, 0, 1);
+
+		Matrix	a = rotationX(M_PI / 2);
+		Matrix	b = scaling(5, 5, 5);
+		Matrix	c = translation(10, 5, 7);
+
+		Point	p2 = a * p;
+		CHECK(p2 == point(1, -1, 0));
+
+		Point	p3 = b * p2;
+		CHECK(p3 == point(5, -5, 0));
+
+		Point	p4 = c * p3;
+		CHECK(p4 == point(15, 0 ,7));
+	}
+
+	TEST(chained_transformation_in_reverse) {
+		Point	p = point(1, 0, 1);
+
+		Matrix	a = rotationX(M_PI / 2);
+		Matrix	b = scaling(5, 5, 5);
+		Matrix	c = translation(10, 5, 7);
+
+		Matrix t = c * b * a;
+
+		CHECK((t * p) == point(15, 0, 7));
+	}
+
+	TEST(chaining_fluent_API) {
+		Point	p = point(1, 0, 1);
+
+		Matrix transform;
+
+		transform.setIdentity()
+		.rotateX(M_PI / 2)
+		.scale(5, 5, 5)
+		.translate(10, 5, 7);
+
+		CHECK((transform * p) == point(15, 0, 7));
+	}	
+	
 }
-
-
 
 #endif /* ALGEBRATEST_HPP */

@@ -37,6 +37,7 @@ Matrix	&Matrix::operator=(Matrix const &rhs) {
 		for (int j = 0; j < 4; j++)
 			_matrix[i][j] = rhs._matrix[i][j];
 	}
+	_size = rhs._size;
 	return (*this);
 }
 
@@ -76,12 +77,14 @@ Matrix	Matrix::operator*(Matrix const &rhs) const {
 	return (result);
 }
 
-void	Matrix::setIdentity(void) {
+Matrix	&Matrix::setIdentity(void) {
 	bzero(this->_matrix, 16 * sizeof(double));
 	this->_matrix[0][0] = 1;
 	this->_matrix[1][1] = 1;
 	this->_matrix[2][2] = 1;
 	this->_matrix[3][3] = 1;
+
+	return (*this);
 }
 
 Matrix	Matrix::transpose(void) const {
@@ -217,4 +220,108 @@ ostream	&operator<<(ostream &o, Matrix const &rhs) {
 			o << "\n";
 	}
 	return (o);
+}
+
+Matrix	&Matrix::translate(double x, double y, double z) {
+	*this = translation(x, y, z) * (*this);
+	return (*this);
+}
+
+Matrix	&Matrix::scale(double x, double y, double z) {
+	*this = scaling(x, y, z) * *this;
+	return (*this);
+}
+
+Matrix	&Matrix::rotateX(double rad) {
+	*this = rotationX(rad) * *this;
+	return (*this);
+}
+
+Matrix	&Matrix::rotateY(double rad) {
+	*this = rotationY(rad) * *this;
+	return (*this);
+}
+
+Matrix	&Matrix::rotateZ(double rad) {
+	*this = rotationZ(rad) * *this;
+	return (*this);
+}
+
+Matrix	&Matrix::shear(double xy, double xz, double yx, double yz, double zx, double zy) {
+	*this = shearing(xy, xz, yx, yz, zx, zy ) * *this;
+	return (*this);
+}
+
+ // related
+
+Matrix	translation(double x, double y, double z) {
+	Matrix	translation;
+
+	translation.setIdentity();
+	translation[0][3] = x;
+	translation[1][3] = y;
+	translation[2][3] = z;
+
+	return (translation);
+ }
+
+ Matrix	scaling(double x, double y, double z) {
+	Matrix	scaling;
+
+	scaling.setIdentity();
+	scaling[0][0] = x;
+	scaling[1][1] = y;
+	scaling[2][2] = z;
+
+	return (scaling);
+ }
+
+ Matrix	rotationX(double rad) {
+	Matrix	rotation;
+
+	rotation.setIdentity();
+	rotation[1][1] = cos(rad);
+	rotation[1][2] = -sin(rad);
+	rotation[2][1] = sin(rad);
+	rotation[2][2] = cos(rad);
+
+	return (rotation);
+}
+
+ Matrix	rotationY(double rad) {
+	Matrix	rotation;
+
+	rotation.setIdentity();
+	rotation[0][0] = cos(rad);
+	rotation[0][2] = sin(rad);
+	rotation[2][0] = -sin(rad);
+	rotation[2][2] = cos(rad);
+
+	return (rotation);
+}
+
+ Matrix	rotationZ(double rad) {
+	Matrix	rotation;
+
+	rotation.setIdentity();
+	rotation[0][0] = cos(rad);
+	rotation[0][1] = -sin(rad);
+	rotation[1][0] = sin(rad);
+	rotation[1][1] = cos(rad);
+
+	return (rotation);
+}
+
+ Matrix	shearing(double xy, double xz, double yx, double yz, double zx, double zy) {
+	Matrix	shearing;
+
+	shearing.setIdentity();
+	shearing[0][1] = xy;
+	shearing[0][2] = xz;
+	shearing[1][0] = yx;
+	shearing[1][2] = yz;
+	shearing[2][0] = zx;
+	shearing[2][1] = zy;
+
+	return (shearing);
 }

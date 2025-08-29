@@ -28,13 +28,20 @@ class Matrix {
 		bool	operator==(Matrix const &rhs) const;
 		Matrix	operator*(Matrix const &rhs) const;
 
-		void	setIdentity(void);
 		Matrix	transpose(void) const;
 		Matrix	submatrix(int row, int column) const;
 		double	determinant() const;
 		double	minor(int row, int column) const;
 		double	cofactor(int row, int column) const;
 		Matrix	inverse(void) const;
+		
+		Matrix	&setIdentity(void);
+		Matrix	&translate(double x, double y, double z);
+		Matrix	&scale(double x, double y, double z);
+		Matrix	&rotateX(double rad);
+		Matrix	&rotateY(double rad);
+		Matrix	&rotateZ(double rad);
+		Matrix	&shear(double xy, double xx, double yx, double yz, double zx, double zy);
 
 		int		getSize(void) const;
 		
@@ -52,6 +59,13 @@ class Matrix {
 		void	deleteRow(int row);
 		void	deleteColumn(int Column);
 		double	determinantTwoByTwo(void) const;
-	};
+};
+
+Matrix	translation(double x, double y, double z);
+Matrix	scaling(double x, double y, double z);
+Matrix	rotationX(double rad);
+Matrix	rotationY(double rad);
+Matrix	rotationZ(double rad);
+Matrix	shearing(double xy, double xz, double yx, double yz, double zx, double zy);
 
 #endif /* MATRIX_HPP */
