@@ -1,7 +1,8 @@
 *.o
-rayrtacer
+raytracer
 *.a
 *.out
 .vscode
 test
 *.ppm
+*workspace
