@@ -1,8 +1,6 @@
-#include "algebra.hpp"
+#include "include/RayTracer.hpp"
 
 int	main() {
-	Vec	vector(1, 2, 3);
-
-	cout << 2 * vector << endl;
+	clockDemo();
 	return 0;
 }
