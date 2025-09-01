@@ -49,5 +49,6 @@ t_ray           transformRay(t_ray const &r, Matrix const &transform);
 // DEMOS
 
 void    clockDemo(void);
+void    sphereDemo(void);
 
 #endif
