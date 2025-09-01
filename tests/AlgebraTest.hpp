@@ -14,7 +14,7 @@ SUITE(ALGEBRA_TEST) {
 	}
 
 	TEST(VECTOR_TEST) {
-		Vec v = vector(4.3, -4.2, 3.1);
+		Vec v = vec(4.3, -4.2, 3.1);
 
 		TestTuple(v, 4.3, -4.2, 3.1, VECTOR);
 	}
@@ -23,34 +23,34 @@ SUITE(ALGEBRA_TEST) {
 		Point	p1 = point(3, 2, 1);
 		Point	p2 = point(5, 6, 7);
 
-		CheckTuple(vector(-2, -4, -6), p1 - p2);
+		CheckTuple(vec(-2, -4, -6), p1 - p2);
 	}
 
 	TEST(SUBTRACT_VEC_FROM_POINT) {
 		Point	p = point(3, 2, 1);
-		Vec		v = vector(5, 6, 7);
+		Vec		v = vec(5, 6, 7);
 
 		CheckTuple(point(-2, -4, -6), p - v);
 	}
 
 	TEST(SUBTRACT_TWO_VECTORS) {
-		Vec	v1 = vector(3, 2, 1);
-		Vec	v2 = vector(5, 6, 7);
+		Vec	v1 = vec(3, 2, 1);
+		Vec	v2 = vec(5, 6, 7);
 
-		CheckTuple(vector(-2, -4, -6), v1 - v2);
+		CheckTuple(vec(-2, -4, -6), v1 - v2);
 	}
 
 	TEST(NEGATING_TUPLE) {
 		Vec	zero;
-		Vec	v = vector(1, -2, 3);
+		Vec	v = vec(1, -2, 3);
 
-		CheckTuple(vector(-1, 2, -3), zero - v);
-		CheckTuple(vector(-1, 2, -3), -v);
+		CheckTuple(vec(-1, 2, -3), zero - v);
+		CheckTuple(vec(-1, 2, -3), -v);
 	}
 
 	TEST(SCALAR_MULTIPLICATION_DIVISION) {
 		Point	p = point(1, -2, 3);
-		Vec		v = vector(1, -2, 3);
+		Vec		v = vec(1, -2, 3);
 
 		TestTuple(p * 3.5, 3.5, -7, 10.5, 3.5);
 		TestTuple(v * 3.5, 3.5, -7, 10.5, 0);
@@ -59,47 +59,47 @@ SUITE(ALGEBRA_TEST) {
 	}
 
 	TEST(MAGNITUDE_TEST) {
-		Vec	v = vector(1, 0, 0);
+		Vec	v = vec(1, 0, 0);
 		CHECK_CLOSE(1, v.magnitude(), EPSILON);
 
-		v = vector(0, 1, 0);
+		v = vec(0, 1, 0);
 		CHECK_CLOSE(1, v.magnitude(), EPSILON);
 
-		v = vector(0, 0, 1);
+		v = vec(0, 0, 1);
 		CHECK_CLOSE(1, v.magnitude(), EPSILON);
 
-		v = vector(1, 2, 3);
+		v = vec(1, 2, 3);
 		CHECK_CLOSE(sqrt(14), v.magnitude(), EPSILON);
 
-		v = vector(-1, -2, -3);
+		v = vec(-1, -2, -3);
 		CHECK_CLOSE(sqrt(14), v.magnitude(), EPSILON);
 	}
 
 	TEST(NORMALIZE_TEST) {
-		Vec v = vector(4, 0, 0);
-		Vec expt = vector(1, 0, 0);
+		Vec v = vec(4, 0, 0);
+		Vec expt = vec(1, 0, 0);
 		CheckTuple(expt, v.normalize());
 
-		v = vector(1, 2, 3);
-		expt = vector(1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14));
+		v = vec(1, 2, 3);
+		expt = vec(1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14));
 		CheckTuple(expt, v.normalize());
 
 		CHECK_CLOSE((v.normalize()).magnitude(), 1, EPSILON);
 	}
 
 	TEST(DOT_PRODUCT_TEST) {
-		Vec a = vector(1, 2, 3);
-		Vec b = vector(2, 3, 4);
+		Vec a = vec(1, 2, 3);
+		Vec b = vec(2, 3, 4);
 
 		CHECK_CLOSE(20, dot(a, b), EPSILON);
 	}
 
 	TEST(CROSS_PRODUCT_TEST) {
-		Vec a = vector(1, 2, 3);
-		Vec b = vector(2, 3, 4);
+		Vec a = vec(1, 2, 3);
+		Vec b = vec(2, 3, 4);
 
-		CheckTuple(vector(-1, 2, -1), cross(a, b));
-		CheckTuple(vector(1, -2, 1), cross(b, a));
+		CheckTuple(vec(-1, 2, -1), cross(a, b));
+		CheckTuple(vec(1, -2, 1), cross(b, a));
 	}
 
 	TEST(ADD_COLORS_TEST) {
@@ -460,7 +460,7 @@ SUITE(MATRIX_TEST) {
 
 	TEST(translation_does_not_affect_vectors) {
 		Matrix &&transform = translation(5, -3, 2);
-		Vec		v = vector(-3, 4, 5);
+		Vec		v = vec(-3, 4, 5);
 
 		CHECK((transform * v) == v);
 	}
@@ -475,18 +475,18 @@ SUITE(MATRIX_TEST) {
 	TEST(multiplying_vec_by_scaling_matrix) {
 		Matrix transform = scaling(2, 3, 4);
 
-		Vec	v = vector(-4, 6, 8);
+		Vec	v = vec(-4, 6, 8);
 
-		CHECK((transform * v) == vector(-8, 18, 32));
+		CHECK((transform * v) == vec(-8, 18, 32));
 	}
 
 	TEST(multiply_by_invese_of_scaling_matrix) {
 		Matrix transform = scaling(2, 3, 4);
 
 		Matrix inverse = transform.inverse();
-		Vec	v = vector(-4, 6, 8);
+		Vec	v = vec(-4, 6, 8);
 
-		CHECK((inverse * v) == vector(-2, 2, 2));
+		CHECK((inverse * v) == vec(-2, 2, 2));
 	}
 
 	TEST(scaling_by_negative) {
