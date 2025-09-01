@@ -102,7 +102,7 @@ Vec	cross(Vec const &vec1, Vec const &vec2) {
 			vec1.x * vec2.y - vec1.y * vec2.x, 0));
 }
 
-Vec	vector(double x, double y, double z) {
+Vec	vec(double x, double y, double z) {
 	return (Vec(x, y, z, VECTOR));
 }
 

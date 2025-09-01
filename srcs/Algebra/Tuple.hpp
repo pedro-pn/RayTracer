@@ -42,7 +42,7 @@ using Vec = Tuple;
 using Point = Tuple;
 using Color = Tuple;
 
-Vec			vector(double x, double y, double z);
+Vec			vec(double x, double y, double z);
 Point		point(double x, double y, double z);
 Color		color(double red, double green, double z);
 
