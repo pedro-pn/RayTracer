@@ -40,6 +40,9 @@ ${NAME_ARCHIVE}: ${OBJECTS_W}
 run: m
 	./${NAME_WILD}
 
+val: m
+	 valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./${NAME_WILD}
+
 ${MAIN_TEST_OBJ}: ${MAIN_TEST}
 				@ ${CC} ${FLAGS} ${INCLUDE} -l UnitTest++ -c $< -o $@
 
