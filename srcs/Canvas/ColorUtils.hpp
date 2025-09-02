@@ -6,25 +6,16 @@
 # define COLORMAX 255
 # define COLORMIN 0
 
-class ColorUtils {
+namespace ColorUtils {
 
-	public:
-
-		~ColorUtils();
-
-		static int	makeColor(Color tcolor);
-		
-		static int	_getRed(int color);
-		static int	_getGreen(int color);
-		static int	_getBlue(int color);
-		static int	_ColorToRgb(double color);
-		
-		static Color	black(void);
-		static Color	white(void);	
-
-	private:
-
-		ColorUtils();
-};
+	int	makeColor(Color tcolor);
+	
+	int	_getRed(int color);
+	int	_getGreen(int color);
+	int	_getBlue(int color);
+	int	_ColorToRgb(double color);
+	Color	black(void);
+	Color	white(void);	
+}
 
 #endif /* COLORUTILS_HPP */

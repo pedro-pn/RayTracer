@@ -1,12 +1,6 @@
 #include "ColorUtils.hpp"
 #include <cmath>
 
-ColorUtils::ColorUtils() {
-}
-
-ColorUtils::~ColorUtils() {
-}
-
 int	ColorUtils::makeColor(Color color) {
 	int red;
 	int	green;
