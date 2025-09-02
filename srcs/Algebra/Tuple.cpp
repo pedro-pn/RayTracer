@@ -1,5 +1,4 @@
-#include "Tuple.hpp"
-#include "algebra.hpp"
+#include "Algebra.hpp"
 #include <cmath>
 
 Tuple::Tuple() : x(0), y(0), z(0), w(0) {

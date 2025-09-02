@@ -1,7 +1,7 @@
 #ifndef ALGEBRATEST_HPP
 # define ALGEBRATEST_HPP
 
-# include "../include/algebra.hpp"
+# include "Algebra.hpp"
 # include <UnitTest++/UnitTest++.h>
 # include "TestUtils.hpp"
 #include <math.h>

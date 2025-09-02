@@ -1,4 +1,4 @@
-#include "algebra.hpp"
+#include "Algebra.hpp"
 
 bool	areEqual(double n1, double n2) {
 	double	diff;
