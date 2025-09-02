@@ -247,6 +247,130 @@ SUITE(CREATING_RAYS) {
         delete s;
     }
 
+    TEST(normal_on_a_sphere_at_point_on_x_axis) {
+        Sphere  *s = new Sphere();
+        
+        Vec     n = normalAt(s, point(1, 0 ,0));
+
+        CHECK(n == vec(1, 0, 0));
+
+        delete s;
+    }
+
+    TEST(normal_on_a_phere_at_point_on_y_axis) {
+        Sphere  *s = new Sphere();
+        
+        Vec     n = normalAt(s, point(0, 1 ,0));
+
+        CHECK(n == vec(0, 1, 0));
+
+        delete s;
+    }
+
+    TEST(normal_on_a_phere_at_point_on_z_axis) {
+        Sphere  *s = new Sphere();
+        
+        Vec     n = normalAt(s, point(0, 0 ,1));
+
+        CHECK(n == vec(0, 0, 1));
+
+        delete s;
+    }
+
+    TEST(normal_on_a_phere_at_non_axial_point) {
+        Sphere  *s = new Sphere();
+        
+        Vec     n = normalAt(s, point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+
+        CHECK(n == vec(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+
+        delete s;
+    }
+
+    TEST(normal_is_a_normalize_vector) {
+        Sphere  *s = new Sphere();
+        
+        Vec     n = normalAt(s, point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+
+        CHECK(n == n.normalize());
+
+        delete s;
+    }
+
+    TEST(computing_normal_on_a_translated_sphere) {
+        Sphere  *s = new Sphere();
+        s->setTransform(Matrix().setIdentity().translate(0, 1, 0));
+        Vec     n = normalAt(s, point(0, 1.70711, -0.70711));
+
+        CHECK(n == vec(0, 0.70711, -0.70711));
+
+        delete s;
+    }
+
+    TEST(computing_normal_on_a_transformed_sphere) {
+        Sphere  *s = new Sphere();
+        s->setTransform(Matrix().setIdentity().rotateZ(M_PI / 5).scale(1, 0.5, 1));
+        Vec     n = normalAt(s, point(0, sqrt(2) / 2, -sqrt(2) / 2));
+
+        CHECK(n == vec(0, 0.97014, -0.24254));
+
+        delete s;
+    }
+
+    TEST(reflecting_a_vector_approaching_at_45) {
+        Vec v = vec(1, -1, 0);
+        Vec n = vec(0, 1, 0);
+        Vec reflected = reflect(v, n);
+
+        CHECK(reflected == vec(1, 1, 0));
+    }
+
+    TEST(reflecting_a_vector_off_slanted_surface) {
+        Vec v = vec(0, -1, 0);
+        Vec n = vec(sqrt(2) / 2, sqrt(2) / 2, 0);
+        Vec reflected = reflect(v, n);
+
+        CHECK(reflected == vec(1, 0, 0));
+    }
+
+    TEST(point_light_has_position_and_intensity) {
+        Color   intensity = color(1, 1, 1);
+        Point   position = point(0, 0, 0);
+        t_light   light = pointLight(position, intensity);
+
+        CHECK(light.position == position);
+        CHECK(light.intensity == intensity);
+    }
+
+    TEST(default_material) {
+        t_material m = t_material();
+
+        CHECK(m.ambient == 0.1);
+        CHECK(m.colour == color(1, 1, 1));
+        CHECK(m.diffuse == 0.9);
+        CHECK(m.specular == 0.9);
+        CHECK(m.shininess == 200.0);
+    }
+
+    TEST(sphere_has_material) {
+        Sphere  *s = new Sphere();
+        
+        CHECK(s->getMaterial() == t_material());
+        delete s;
+    }
+
+    TEST(sphere_may_be_assigned_material) {
+        Sphere  *s = new Sphere();
+        t_material m =  t_material();
+        m.ambient = 1;
+        s->setMaterial(m);
+
+        CHECK(s->getMaterial().ambient == m.ambient);
+
+        delete s;
+    }
+
+
 }
 
 #endif /* RAYSTESTS_HPP */

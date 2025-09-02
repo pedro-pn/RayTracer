@@ -3,7 +3,7 @@
 
 # include <iostream>
 # include <cmath>
-# include "algebra.hpp"
+# include "Algebra.hpp"
 
 using namespace std;
 
