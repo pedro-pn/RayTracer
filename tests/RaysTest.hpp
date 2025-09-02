@@ -370,7 +370,65 @@ SUITE(CREATING_RAYS) {
         delete s;
     }
 
+    TEST(lighting_with_eye_between_light_and_surface) {
+        t_material  m = t_material();
+        Point   position = point(0, 0, 0);
+        Vec     eyev = vec(0, 0, -1);
+        Vec     normalv = vec(0, 0, -1);
+        t_light light = pointLight(point(0, 0, -10), color(1, 1, 1));
 
+        Color   result = lighting(m, light, position, eyev, normalv);
+
+        CHECK(result == color(1.9, 1.9, 1.9));
+    }
+
+    TEST(lighting_with_eye_between_light_and_surface_eye_offset_45) {
+        t_material  m = t_material();
+        Point   position = point(0, 0, 0);
+        Vec     eyev = vec(0, sqrt(2) / 2, -sqrt(2) / 2);
+        Vec     normalv = vec(0, 0, -1);
+        t_light light = pointLight(point(0, 0, -10), color(1, 1, 1));
+
+        Color   result = lighting(m, light, position, eyev, normalv);
+
+        CHECK(result == color(1.0, 1.0, 1.0));
+    }
+
+    TEST(lighting_with_eye_opposite__surface_light_offset_45) {
+        t_material  m = t_material();
+        Point   position = point(0, 0, 0);
+        Vec     eyev = vec(0, 0, -1);
+        Vec     normalv = vec(0, 0, -1);
+        t_light light = pointLight(point(0, 10, -10), color(1, 1, 1));
+
+        Color   result = lighting(m, light, position, eyev, normalv);
+
+        CHECK(result == color(0.7364, 0.7364, 0.7364));
+    }
+
+    TEST(lighting_with_eye_in_the_path_of_reflection_vector) {
+        t_material  m = t_material();
+        Point   position = point(0, 0, 0);
+        Vec     eyev = vec(0, -sqrt(2) / 2 , -sqrt(2) / 2);
+        Vec     normalv = vec(0, 0, -1);
+        t_light light = pointLight(point(0, 10, -10), color(1, 1, 1));
+
+        Color   result = lighting(m, light, position, eyev, normalv);
+
+        CHECK(result == color(1.6364, 1.6364, 1.6364));
+    }
+
+    TEST(lighting_with_eye_behing_the_surface) {
+        t_material  m = t_material();
+        Point   position = point(0, 0, 0);
+        Vec     eyev = vec(0, 0, -1);
+        Vec     normalv = vec(0, 0, -1);
+        t_light light = pointLight(point(0, 0, 10), color(1, 1, 1));
+
+        Color   result = lighting(m, light, position, eyev, normalv);
+
+        CHECK(result == color(0.1, 0.1, 0.1));
+    }
 }
 
 #endif /* RAYSTESTS_HPP */

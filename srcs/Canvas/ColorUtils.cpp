@@ -37,3 +37,11 @@ int	ColorUtils::_getGreen(int color) {
 int	ColorUtils::_getBlue(int color) {
 	return (color & 0xFF);
 }
+
+Color	ColorUtils::black(void) {
+	return (color(0, 0, 0));
+}
+
+Color	ColorUtils::white(void) {
+	return (color(1, 1, 1));
+}

@@ -13,11 +13,14 @@ class ColorUtils {
 		~ColorUtils();
 
 		static int	makeColor(Color tcolor);
-
+		
 		static int	_getRed(int color);
 		static int	_getGreen(int color);
 		static int	_getBlue(int color);
 		static int	_ColorToRgb(double color);
+		
+		static Color	black(void);
+		static Color	white(void);	
 
 	private:
 
