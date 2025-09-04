@@ -1,4 +1,4 @@
-#include <RayTracer.hpp>
+#include "RayTracer.hpp"
 
 t_ray   ray(Point const &origin, Vec const &direction) {
     return ((t_ray){origin, direction});
@@ -8,7 +8,7 @@ Point   position(t_ray  const &r, double t) {
     return (r.origin + r.direction * t);
 }
 
-t_intersection  intersection(double t, Sphere const *s) {
+t_intersection  intersection(double t, Sphere const &s) {
     t_intersection  inter;
 
     inter.object = s;
@@ -17,8 +17,8 @@ t_intersection  intersection(double t, Sphere const *s) {
     return (inter);
 }
 
-t_intersect intersect(Sphere const *s, t_ray const &r) {
-    t_ray           transformedRay = transformRay(r, s->getTransform().inverse());
+t_intersect intersect(Sphere const &s, t_ray const &r) {
+    t_ray           transformedRay = transformRay(r, s.getTransform().inverse());
     Point           sphereToRay = transformedRay.origin - point(0, 0, 0);
     t_intersect     xs;
 

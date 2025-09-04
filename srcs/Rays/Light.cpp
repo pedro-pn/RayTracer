@@ -1,9 +1,9 @@
 #include "RayTracer.hpp"
 
-Vec normalAt(Sphere const *object, Point const &worldPoint) {
-    Point   objectPoint = object->getTransform().inverse() * worldPoint;
-    Vec     objectNormal = objectPoint - object->getOrigin();
-    Vec     worldNormal = object->getTransform().inverse().transpose() * objectNormal;
+Vec normalAt(Sphere const &object, Point const &worldPoint) {
+    Point   objectPoint = object.getTransform().inverse() * worldPoint;
+    Vec     objectNormal = objectPoint - object.getOrigin();
+    Vec     worldNormal = object.getTransform().inverse().transpose() * objectNormal;
     worldNormal.w = 0;
     return (worldNormal.normalize());
 }

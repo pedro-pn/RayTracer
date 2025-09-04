@@ -11,13 +11,14 @@ class Sphere {
         Sphere();
         ~Sphere();
 
-        // bool    operator==(Sphere const &rhs) const;
+        bool    operator==(Sphere const &rhs) const;
 
-        Matrix const    &getTransform() const;
-        void            setTransform(Matrix const &transform);
-        Point           getOrigin(void) const;
-        t_material const  &getMaterial(void) const;
-        void            setMaterial(t_material const &material);
+        Matrix const          &getTransform() const;
+        void                   setTransform(Matrix const &transform);
+        Point                  getOrigin(void) const;
+        t_material            &getMaterial(void);
+        t_material const      &getMaterial(void) const;
+        void                   setMaterial(t_material const &material);
 
     private:
 

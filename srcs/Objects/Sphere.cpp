@@ -6,12 +6,10 @@ Sphere::Sphere(): _origin(point(0, 0, 0)), _transform(Matrix().setIdentity()), _
 Sphere::~Sphere() {
 }
 
-// bool    Sphere::operator==(Sphere const &rhs) const
-// {
-//     if (*this == rhs)
-//         return (true);
-//     return (false);
-// };
+bool    Sphere::operator==(Sphere const &rhs) const
+{
+    return (this->_material == rhs._material && this->_transform == rhs._transform);
+}
 
 Matrix const    &Sphere::getTransform() const {
     return (this->_transform);
@@ -26,6 +24,10 @@ Point   Sphere::getOrigin(void) const {
 }
 
 t_material const  &Sphere::getMaterial(void) const {
+    return (this->_material);
+}
+
+t_material  &Sphere::getMaterial(void) {
     return (this->_material);
 }
 

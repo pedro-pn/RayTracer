@@ -28,7 +28,7 @@ SUITE(CREATING_RAYS) {
 
     TEST(ray_intersects_with_sphere) {
         t_ray   r = ray(point(0, 0, -5), vec(0, 0, 1));
-        Sphere  *s = new Sphere();
+        Sphere  s =  Sphere();
 
         t_intersect xs = intersect(s, r);
 
@@ -36,12 +36,11 @@ SUITE(CREATING_RAYS) {
         CHECK(xs.intersections[0].t == 4.0);
         CHECK(xs.intersections[1].t == 6.0);
 
-        delete s;
     }
 
     TEST(ray_intersect_a_sphere_tangent) {
         t_ray   r = ray(point(0, 1, -5), vec(0, 0, 1));
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
 
         t_intersect xs = intersect(s, r);
 
@@ -49,36 +48,31 @@ SUITE(CREATING_RAYS) {
         CHECK(xs.intersections[0].t == 5.0);
         CHECK(xs.intersections[1].t == 5.0);
 
-        delete s;
     }
 
     TEST(ray_misses_sphere) {
         t_ray   r = ray(point(0, 2, -5), vec(0, 0, 1));
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
 
         t_intersect xs = intersect(s, r);
 
         CHECK(xs.count == 0);
-
-        delete s;
     }
     
     TEST(ray_originates_inside_sphere) {
         t_ray   r = ray(point(0, 0, 0), vec(0, 0, 1));
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
 
         t_intersect xs = intersect(s, r);
 
         CHECK(xs.count == 2);
         CHECK(xs.intersections[0].t == -1.0);
         CHECK(xs.intersections[1].t== 1.0);
-
-        delete s;
     }
 
     TEST(ray_originates_behind_sphere) {
         t_ray   r = ray(point(0, 0, 5), vec(0, 0, 1));
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
 
         t_intersect xs = intersect(s, r);
 
@@ -86,21 +80,18 @@ SUITE(CREATING_RAYS) {
         CHECK(xs.intersections[0].t == -6.0);
         CHECK(xs.intersections[1].t == -4.0);
 
-        delete s;
     }
 
     TEST(intersection_encapsulates_t_and_object) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         t_intersection i = intersection(3.5, s);
 
         CHECK(i.t == 3.5);
         CHECK(i.object == s);
-
-        delete s;
     }
 
     TEST(intersect_sets_object_on_intersection) {
-        Sphere  *s = new Sphere();
+        Sphere    s = Sphere();
         t_ray     r = ray(point(0, 0, -5), vec(0,0,1));
 
         auto xs = intersect(s, r);
@@ -109,11 +100,10 @@ SUITE(CREATING_RAYS) {
         CHECK(xs.intersections[0].object == s);
         CHECK(xs.intersections[1].object == s);
 
-        delete s;
     }
 
     TEST(hit_when_all_t_are_positive) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         t_intersection  i1{1, s};
         t_intersection  i2{2, s};
 
@@ -128,7 +118,7 @@ SUITE(CREATING_RAYS) {
     }
 
     TEST(hit_when_some_t_are_negative) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         t_intersection  i1{-1, s};
         t_intersection  i2{1, s};
 
@@ -143,7 +133,7 @@ SUITE(CREATING_RAYS) {
     }
 
     TEST(hit_when_all_t_are_negative) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         t_intersection  i1{-2, s};
         t_intersection  i2{-1, s};
 
@@ -158,7 +148,7 @@ SUITE(CREATING_RAYS) {
     }
 
     TEST(hit_is_always_the_lowest_negative_value) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         t_intersection  i1{5, s};
         t_intersection  i2{7, s};
         t_intersection  i3{-3, s};
@@ -201,120 +191,101 @@ SUITE(CREATING_RAYS) {
     }
 
     TEST(sphere_has_transformation_matrix) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
  
-        CHECK(s->getTransform() == Matrix().setIdentity());
+        CHECK(s.getTransform() == Matrix().setIdentity());
 
-        delete s;
     }
 
     TEST(changing_spheres_transformation) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         Matrix  t = translation(2, 3, 4);
 
-        s->setTransform(t);
+        s.setTransform(t);
 
-        CHECK(s->getTransform() == t);
-
-        delete s;
+        CHECK(s.getTransform() == t);
     }
 
     TEST(intersecting_scaled_sphere_with_a_ray) {
         t_ray   r = ray(point(0, 0, -5), vec(0, 0, 1));
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
 
-        s->setTransform(scaling(2, 2, 2));
+        s.setTransform(scaling(2, 2, 2));
 
         t_intersect xs = intersect(s, r);
 
         CHECK(xs.count == 2);
         CHECK(xs.intersections[0].t == 3);
         CHECK(xs.intersections[1].t == 7);
-
-        delete s;
     }
 
     TEST(intersecting_translated_sphere_whti_ray) {
         t_ray   r = ray(point(0, 0, -5), vec(0, 0, 1));
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
 
-        s->setTransform(translation(5, 0, 0));
+        s.setTransform(translation(5, 0, 0));
 
         t_intersect xs = intersect(s, r);
 
         CHECK(xs.count == 0);
-
-        delete s;
     }
 
     TEST(normal_on_a_sphere_at_point_on_x_axis) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         
         Vec     n = normalAt(s, point(1, 0 ,0));
 
         CHECK(n == vec(1, 0, 0));
-
-        delete s;
     }
 
     TEST(normal_on_a_phere_at_point_on_y_axis) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         
         Vec     n = normalAt(s, point(0, 1 ,0));
 
         CHECK(n == vec(0, 1, 0));
 
-        delete s;
     }
 
     TEST(normal_on_a_phere_at_point_on_z_axis) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         
         Vec     n = normalAt(s, point(0, 0 ,1));
 
         CHECK(n == vec(0, 0, 1));
-
-        delete s;
     }
 
     TEST(normal_on_a_phere_at_non_axial_point) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         
         Vec     n = normalAt(s, point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
 
         CHECK(n == vec(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
 
-        delete s;
     }
 
     TEST(normal_is_a_normalize_vector) {
-        Sphere  *s = new Sphere();
+        Sphere  s = Sphere();
         
         Vec     n = normalAt(s, point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
 
         CHECK(n == n.normalize());
-
-        delete s;
     }
 
     TEST(computing_normal_on_a_translated_sphere) {
-        Sphere  *s = new Sphere();
-        s->setTransform(Matrix().setIdentity().translate(0, 1, 0));
+        Sphere  s = Sphere();
+        s.setTransform(Matrix().setIdentity().translate(0, 1, 0));
         Vec     n = normalAt(s, point(0, 1.70711, -0.70711));
 
         CHECK(n == vec(0, 0.70711, -0.70711));
-
-        delete s;
     }
 
     TEST(computing_normal_on_a_transformed_sphere) {
-        Sphere  *s = new Sphere();
-        s->setTransform(Matrix().setIdentity().rotateZ(M_PI / 5).scale(1, 0.5, 1));
+        Sphere  s = Sphere();
+        s.setTransform(Matrix().setIdentity().rotateZ(M_PI / 5).scale(1, 0.5, 1));
         Vec     n = normalAt(s, point(0, sqrt(2) / 2, -sqrt(2) / 2));
 
         CHECK(n == vec(0, 0.97014, -0.24254));
-
-        delete s;
     }
 
     TEST(reflecting_a_vector_approaching_at_45) {
