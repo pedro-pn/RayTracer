@@ -2,6 +2,7 @@
 
 int	main() {
 	// clockDemo();
-	sphereDemo();
+	// sphereDemo();
+	spheresDemo();
 	return 0;
 }

@@ -33,3 +33,16 @@ Color   colorAt(World const &world, t_ray const &ray) {
 
     return (shadeHit(world, comps));
 }
+
+Matrix  viewTransformation(Point const &from, Point const &to, Vec const &up) {
+    Vec forward = (to - from).normalize();
+    Vec left = cross(forward, up.normalize());
+    Vec trueUp = cross(left, forward);
+    Matrix  orientation((t_setMatrix){
+        left.x, left.y, left.z, 0,
+        trueUp.x, trueUp.y, trueUp.z, 0,
+        -forward.x, -forward.y, -forward.z, 0,
+        0, 0, 0, 1
+    });
+    return (orientation * translation(-from.x, -from.y, -from.z));
+}

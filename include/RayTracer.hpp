@@ -12,6 +12,7 @@
 # include "World.hpp"
 # include "Ray.hpp"
 # include "Light.hpp"
+# include "Camera.hpp"
 # include <vector>
 # include <memory>
 # include <optional>
@@ -32,10 +33,12 @@ typedef struct s_computations {
 t_computations  prepareComputations(t_intersection const &inter, t_ray const &ray);
 Color           shadeHit(World const &world, t_computations const &comps);
 Color           colorAt(World const &world, t_ray const &ray);
+Matrix          viewTransformation(Point const &from, Point const &to, Vec const &up);
 
 // DEMOS
 
 void    clockDemo(void);
 void    sphereDemo(void);
+void    spheresDemo(void);
 
 #endif
