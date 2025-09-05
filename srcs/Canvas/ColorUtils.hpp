@@ -1,10 +1,9 @@
-#ifndef COLORUTILS_HPP
-# define COLORUTILS_HPP
+#pragma once
 
-# include "Algebra.hpp"
+#include "Algebra.hpp"
 
-# define COLORMAX 255
-# define COLORMIN 0
+#define COLORMAX 255
+#define COLORMIN 0
 
 namespace ColorUtils {
 
@@ -19,5 +18,3 @@ namespace ColorUtils {
 	Color	white(void);	
 	Color	pixelColorToColor(int color);
 }
-
-#endif /* COLORUTILS_HPP */

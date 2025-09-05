@@ -1,8 +1,6 @@
-#ifndef SPHERE_HPP
-# define SPHERE_HPP
-
-# include "Algebra.hpp"
-# include "Material.hpp"
+#pragma once
+#include "Algebra.hpp"
+#include "Material.hpp"
 
 class Sphere {
 
@@ -28,4 +26,3 @@ class Sphere {
         t_material  _material;
 };
 
-#endif /* SPHERE_HPP */

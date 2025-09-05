@@ -1,9 +1,8 @@
-#ifndef RAYSTESTS_HPP
-# define RAYSTESTS_HPP
+#pragma once
 
-# include <UnitTest++/UnitTest++.h>
-# include "TestUtils.hpp"
-# include "RayTracer.hpp"
+#include <UnitTest++/UnitTest++.h>
+#include "TestUtils.hpp"
+#include "RayTracer.hpp"
 
 SUITE(CREATING_RAYS) {
     
@@ -401,5 +400,3 @@ SUITE(CREATING_RAYS) {
         CHECK(result == color(0.1, 0.1, 0.1));
     }
 }
-
-#endif /* RAYSTESTS_HPP */

@@ -1,22 +1,19 @@
-#ifndef RAYTRACER_HPP
-# define RAYTRACER_HPP
-
-# pragma once
-# include "Algebra.hpp"
-# include "Matrix.hpp"
-# include "Tuple.hpp"
-# include "ColorUtils.hpp"
-# include "Canvas.hpp"
-# include "Material.hpp"
-# include "Sphere.hpp"
-# include "World.hpp"
-# include "Ray.hpp"
-# include "Light.hpp"
-# include "Camera.hpp"
-# include <vector>
-# include <memory>
-# include <optional>
-# include <algorithm>
+#pragma once
+#include "Algebra.hpp"
+#include "Matrix.hpp"
+#include "Tuple.hpp"
+#include "ColorUtils.hpp"
+#include "Canvas.hpp"
+#include "Material.hpp"
+#include "Sphere.hpp"
+#include "World.hpp"
+#include "Ray.hpp"
+#include "Light.hpp"
+#include "Camera.hpp"
+#include <vector>
+#include <memory>
+#include <optional>
+#include <algorithm>
 
 
 typedef struct s_computations {
@@ -40,5 +37,3 @@ Matrix          viewTransformation(Point const &from, Point const &to, Vec const
 void    clockDemo(void);
 void    sphereDemo(void);
 void    spheresDemo(void);
-
-#endif

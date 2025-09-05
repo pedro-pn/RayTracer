@@ -1,5 +1,4 @@
-#ifndef TESTUTILS_HPP
-# define TESTUTILS_HPP
+#pragma once
 
 void	TestTuple(Tuple const &tuple, double x, double y, double z, double w) {
 	CHECK_CLOSE(x, tuple.x, EPSILON);
@@ -14,5 +13,3 @@ void	CheckTuple(Tuple const &expected, Tuple const &result) {
 	CHECK_CLOSE(expected.z, result.z, EPSILON);
 	CHECK_CLOSE(expected.w, result.w, EPSILON);
 }
-
-#endif /* TESTUTILS_HPP*/

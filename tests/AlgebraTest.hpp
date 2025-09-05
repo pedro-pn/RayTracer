@@ -1,9 +1,8 @@
-#ifndef ALGEBRATEST_HPP
-# define ALGEBRATEST_HPP
+#pragma once
 
-# include "Algebra.hpp"
-# include <UnitTest++/UnitTest++.h>
-# include "TestUtils.hpp"
+#include "Algebra.hpp"
+#include <UnitTest++/UnitTest++.h>
+#include "TestUtils.hpp"
 #include <math.h>
 
 SUITE(ALGEBRA_TEST) {
@@ -628,5 +627,3 @@ SUITE(MATRIX_TEST) {
 	}	
 	
 }
-
-#endif /* ALGEBRATEST_HPP */

@@ -1,13 +1,11 @@
-#ifndef CANVAS_HPP
-# define CANVAS_HPP
-
-# include <iostream>
-# include "Algebra.hpp"
-# include "ColorUtils.hpp"
+#pragma once
+#include <iostream>
+#include "Algebra.hpp"
+#include "ColorUtils.hpp"
 
 using namespace std;
 
-# include "ColorUtils.hpp"
+#include "ColorUtils.hpp"
 
 class Canvas {
 
@@ -40,5 +38,3 @@ class Canvas {
 		void	_makePPMHeader(stringstream &buffer);
 		
 };
-
-#endif /* CANVAS_HPP */

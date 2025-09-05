@@ -1,12 +1,11 @@
-#ifndef CANVASTEST_HPP
-# define CANVASTEST_HPP
+#pragma once
 
-# include <UnitTest++/UnitTest++.h>
-# include "TestUtils.hpp"
-# include "Canvas.hpp"
-# include <fstream>
+#include <UnitTest++/UnitTest++.h>
+#include "TestUtils.hpp"
+#include "Canvas.hpp"
+#include <fstream>
 
-# define PPMFILE "P3\n5 3\n255\n255 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n\
+#define PPMFILE "P3\n5 3\n255\n255 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n\
 0 0 0 0 0 0 0 128 0 0 0 0 0 0 0\n0 0 0 0 0 0 0 0 0 0 0 0 0 0 255\n"
 
 SUITE(CANVAS) {
@@ -57,5 +56,3 @@ SUITE(CANVAS) {
 		CHECK(buffer.str() == PPMFILE);
 	}
 }
-
-#endif /* CANVASTEST_HPP */
