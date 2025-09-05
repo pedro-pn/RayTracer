@@ -14,6 +14,7 @@ class Sphere {
         bool    operator==(Sphere const &rhs) const;
 
         Matrix const          &getTransform() const;
+        Matrix                &getTransform();
         void                   setTransform(Matrix const &transform);
         Point                  getOrigin(void) const;
         t_material            &getMaterial(void);

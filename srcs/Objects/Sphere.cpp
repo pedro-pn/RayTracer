@@ -15,6 +15,10 @@ Matrix const    &Sphere::getTransform() const {
     return (this->_transform);
 }
 
+Matrix    &Sphere::getTransform() {
+    return (this->_transform);
+}
+
 void    Sphere::setTransform(Matrix const &transform) {
     this->_transform = transform;
 }
