@@ -8,6 +8,8 @@ World::~World() {
 
 t_intersect World::intersectWorld(t_ray const &ray) const {
     t_intersect xs;
+
+    xs.count = 0;
     for (auto it = _spheres.begin(); it != _spheres.end(); it++) {
         xs += intersect(*it, ray);
     }
