@@ -44,7 +44,7 @@ Color	ColorUtils::white(void) {
 	return (color(1, 1, 1));
 }
 
-Color	ColorUtils::colorPixelToColor(int colorPixel) {
+Color	ColorUtils::pixelColorToColor(int colorPixel) {
 	double	red = rgbToColor(_getRed(colorPixel));
 	double	green = rgbToColor(_getGreen(colorPixel));
 	double	blue = rgbToColor(_getBlue(colorPixel));
