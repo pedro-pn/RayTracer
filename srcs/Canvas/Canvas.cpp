@@ -59,11 +59,11 @@ int	Canvas::getWidth(void) const {
 }
 
 int		Canvas::getPixel(int width, int height) const {
-	return (_image[(height * _height) + width]);
+	return (_image[(height * _width) + width]);
 }
 
 void	Canvas::writePixel(int width, int height, Color color) {
-	this->_image[(height * _height) + width] = ColorUtils::makeColor(color);
+	this->_image[(height * _width) + width] = ColorUtils::makeColor(color);
 }
 
 void	Canvas::saveToPPM(string const &fileName) {
