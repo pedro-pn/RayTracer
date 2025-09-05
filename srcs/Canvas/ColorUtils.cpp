@@ -20,6 +20,10 @@ int	ColorUtils::_ColorToRgb(double color) {
 	return (ceil(color * COLORMAX));
 }
 
+double	ColorUtils::rgbToColor(int color) {
+	return ((double) color / (double) COLORMAX);
+}
+
 int	ColorUtils::_getRed(int color) {
 	return ((color >> 16) & 0xFF);
 }
@@ -38,4 +42,11 @@ Color	ColorUtils::black(void) {
 
 Color	ColorUtils::white(void) {
 	return (color(1, 1, 1));
+}
+
+Color	ColorUtils::colorPixelToColor(int colorPixel) {
+	double	red = rgbToColor(_getRed(colorPixel));
+	double	green = rgbToColor(_getGreen(colorPixel));
+	double	blue = rgbToColor(_getBlue(colorPixel));
+	return (color(red, green, blue));
 }
