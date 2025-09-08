@@ -10,7 +10,7 @@ class Sphere: public Shape {
         ~Sphere() override;
 
         t_intersect intersect(t_ray const &r) const override;
-        virtual Vec         normalAt(Point const &worldPoint) const override;
+        Vec         normalAt(Point const &worldPoint) const override;
 
     private:
 
