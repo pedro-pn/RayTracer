@@ -14,8 +14,9 @@ class World {
         ~World();
 
         t_intersect intersectWorld(t_ray const &ray) const;
-        void    setLight(t_light const &light);
-        void    addObject(Sphere const &sphere);
+        void        setLight(t_light const &light);
+        void        addObject(Sphere const &sphere);
+        bool        isShadowed(Point const &point) const;
 
         t_light               &getLight(void);
         vector<Sphere>        &getObjects(void);

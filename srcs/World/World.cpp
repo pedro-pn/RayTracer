@@ -40,6 +40,22 @@ vector<Sphere> const  &World::getObjects(void) const {
     return (this->_spheres);
 }
 
+bool    World::isShadowed(Point const &point) const {
+    Vec v = this->_light.position - point;
+    Vec direction = v.normalize();
+    double distance = v.magnitude();
+
+    t_ray r = ray(point, direction);
+    t_intersect xs = this->intersectWorld(r);
+    auto inter = hit(xs);
+
+    if (inter == nullopt)
+        return (false);
+    if ((*inter).t < distance)
+        return (true);
+    return (false);
+}
+
 World   defaultWorld(void) {
     t_light light = pointLight(point(-10, 10, -10), color(1, 1, 1));
     Sphere  s1 = Sphere();

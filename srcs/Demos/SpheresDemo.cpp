@@ -39,7 +39,7 @@ static Sphere   rightWall(void) {
 static Sphere   middleSphere(void) {
     Sphere middleSphere;
 
-    middleSphere.getTransform().scale(0.5, 0.5, 0.5).translate(-0.5, 1, 0.5);
+    middleSphere.getTransform().translate(-0.5, 1, 0.5).scale(0.5, 0.5, 0.5);
     middleSphere.getMaterial().colour = color(0.1, 1, 0.5);
     middleSphere.getMaterial().diffuse = 0.7;
     middleSphere.getMaterial().specular = 0.3;
@@ -70,7 +70,7 @@ static Sphere   leftSphere(void) {
 }
 
 void    spheresDemo(void) {
-    Camera  cam(1000, 500, M_PI / 3);
+    Camera  cam(2000, 1000, M_PI / 3);
     World   world;
 
     cam.setTransform(viewTransformation(

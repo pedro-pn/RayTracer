@@ -88,17 +88,45 @@ SUITE(WORLD_TESTS) {
 	
 	TEST(shading_an_intersection_from_the_inside) {
 		t_ray   r = ray(point(0, 0, 0), vec(0, 0, 1));
-		Sphere  s;
-		t_intersection  inter = intersection(0.5, s);
 		World   w = defaultWorld();
 		w.setLight(pointLight(point(0, 0.25, 0), color(1, 1, 1)));
 		
 		
 		
+		t_intersection  inter = intersection(0.5, w.getObjects()[1]);
 		t_computations   comps = prepareComputations(inter, r);
 		Color   c = shadeHit(w, comps);
-		
+
 		CHECK(c == color(0.90498, 0.90498, 0.90498));
+	}
+
+	TEST(shade_is_given_an_intersection_in_shadow) {
+		World	w;
+		w.setLight(pointLight(point(0, 0, -10), color(1, 1, 1)));
+		Sphere	s1;
+		Sphere	s2;
+
+		w.addObject(s1);
+		s2.getTransform().translate(0, 0, 10);
+		w.addObject(s2);
+		t_ray	r = ray(point(0, 0, 5), vec(0, 0, 1));
+		t_intersection inter = intersection(4, s2);
+		t_computations comps = prepareComputations(inter, r);
+		Color c = shadeHit(w, comps);
+
+		CHECK(c == color(0.1, 0.1, 0.1));
+	}
+
+	TEST(hit_should_offset_the_point) {
+		t_ray	r = ray(point(0, 0, -5), vec(0, 0, 1));
+		Sphere	s;
+
+		s.getTransform().translate(0, 0, 1);
+		t_intersection	inter = intersection(5, s);
+		t_computations	comps = prepareComputations(inter, r);
+
+		CHECK(comps.overPoint.z < -EPSILON / 2);
+		CHECK(comps.point.z > comps.overPoint.z);
 	}
 
 	TEST(color_when_ray_misses) {

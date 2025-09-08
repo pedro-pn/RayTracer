@@ -347,7 +347,7 @@ SUITE(CREATING_RAYS) {
         Vec     normalv = vec(0, 0, -1);
         t_light light = pointLight(point(0, 0, -10), color(1, 1, 1));
 
-        Color   result = lighting(m, light, position, eyev, normalv);
+        Color   result = lighting(m, light, position, eyev, normalv, false);
 
         CHECK(result == color(1.9, 1.9, 1.9));
     }
@@ -359,7 +359,7 @@ SUITE(CREATING_RAYS) {
         Vec     normalv = vec(0, 0, -1);
         t_light light = pointLight(point(0, 0, -10), color(1, 1, 1));
 
-        Color   result = lighting(m, light, position, eyev, normalv);
+        Color   result = lighting(m, light, position, eyev, normalv, false);
 
         CHECK(result == color(1.0, 1.0, 1.0));
     }
@@ -371,7 +371,7 @@ SUITE(CREATING_RAYS) {
         Vec     normalv = vec(0, 0, -1);
         t_light light = pointLight(point(0, 10, -10), color(1, 1, 1));
 
-        Color   result = lighting(m, light, position, eyev, normalv);
+        Color   result = lighting(m, light, position, eyev, normalv, false);
 
         CHECK(result == color(0.7364, 0.7364, 0.7364));
     }
@@ -383,7 +383,7 @@ SUITE(CREATING_RAYS) {
         Vec     normalv = vec(0, 0, -1);
         t_light light = pointLight(point(0, 10, -10), color(1, 1, 1));
 
-        Color   result = lighting(m, light, position, eyev, normalv);
+        Color   result = lighting(m, light, position, eyev, normalv, false);
 
         CHECK(result == color(1.6364, 1.6364, 1.6364));
     }
@@ -395,8 +395,49 @@ SUITE(CREATING_RAYS) {
         Vec     normalv = vec(0, 0, -1);
         t_light light = pointLight(point(0, 0, 10), color(1, 1, 1));
 
-        Color   result = lighting(m, light, position, eyev, normalv);
+        Color   result = lighting(m, light, position, eyev, normalv, false);
 
         CHECK(result == color(0.1, 0.1, 0.1));
+    }
+
+    TEST(lighting_with_surface_in_shadow) {
+        t_material  m = t_material();
+        Point   position = point(0, 0, 0);
+        Vec eyev = vec(0, 0, -1);
+        Vec normalv = vec(0, 0, -1);
+        t_light light = pointLight(point(0, 0, -10), color(1, 1, 1));
+        bool    inShadow = true;
+
+        Color   result = lighting(m, light, position, eyev, normalv, inShadow);
+
+        CHECK(result == color (0.1, 0.1, 0.1));
+    }
+
+    TEST(there_is_no_shadow_when_nothing_is_collinear_with_point_and_light) {
+        World   w = defaultWorld();
+        Point   p = point(0, 10, 0);
+
+        CHECK(w.isShadowed(p) == false);
+    }
+
+    TEST(shadow_when_an_object_is_between_point_and_light) {
+        World   w = defaultWorld();
+        Point   p = point(10, -10, 10);
+
+        CHECK(w.isShadowed(p) == true);
+    }
+
+    TEST(there_is_no_shadow_when_an_object_is_behind_the_light) {
+        World   w = defaultWorld();
+        Point   p = point(-20, 20, -20);
+
+        CHECK(w.isShadowed(p) == false);
+    }
+
+    TEST(there_is_no_shadow_when_an_object_is_behind_the_point) {
+        World   w = defaultWorld();
+        Point   p = point(-2, 2, -2);
+
+        CHECK(w.isShadowed(p) == false);
     }
 }

@@ -16,7 +16,7 @@ t_light pointLight(Point const &position, Color const &intensity) {
     return (t_light(position, intensity));
 }
 
-Color   lighting(t_material const &material, t_light const &light, Point const &point, Vec const &eyev, Vec const &normalv) {
+Color   lighting(t_material const &material, t_light const &light, Point const &point, Vec const &eyev, Vec const &normalv, bool inShadow) {
    Color    effectiveColor = material.colour * light.intensity;
    Vec      lightVector = (light.position - point).normalize();
    Color    ambient = material.ambient * effectiveColor;
@@ -24,7 +24,7 @@ Color   lighting(t_material const &material, t_light const &light, Point const &
    Color    diffuse = ColorUtils::black();
 
    double   lightDotNormal = dot(lightVector, normalv);
-   if (lightDotNormal >= 0) {
+   if (lightDotNormal >= 0 && inShadow == false) {
         diffuse = effectiveColor * material.diffuse * lightDotNormal;
         Vec   reflectVector = reflect(-lightVector, normalv);
         double  reflectDotEye = dot(reflectVector, eyev);

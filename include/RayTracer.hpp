@@ -20,6 +20,7 @@ typedef struct s_computations {
     double  t;
     Sphere  object;
     Point   point;
+    Point   overPoint;
     Vec     eyev;
     Vec     normalv;
     bool    inside;
