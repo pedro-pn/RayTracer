@@ -1,4 +1,6 @@
 #include "World.hpp"
+#include "Sphere.hpp"
+#include <algorithm>
 
 World::World() {
 }
@@ -10,8 +12,8 @@ t_intersect World::intersectWorld(t_ray const &ray) const {
     t_intersect xs;
 
     xs.count = 0;
-    for (auto it = _spheres.begin(); it != _spheres.end(); it++) {
-        xs += intersect(*it, ray);
+    for (auto it = _shape.begin(); it != _shape.end(); it++) {
+        xs += (*it)->intersect(ray);
     }
     sort(xs.intersections.begin(), xs.intersections.end());
     return (xs);
@@ -20,24 +22,25 @@ t_intersect World::intersectWorld(t_ray const &ray) const {
 void    World::setLight(t_light const &light) { 
     this->_light = light;
 }
-void    World::addObject(Sphere const &sphere) {
-    this->_spheres.push_back(sphere);
+
+void    World::addShape(shapePtr shape) {
+    this->_shape.push_back(move(shape));
 }
 
 t_light         &World::getLight(void) {
     return (this->_light);
 }
 
-vector<Sphere>  &World::getObjects(void) {
-    return (this->_spheres);
+shapeList  &World::getShapes(void) {
+    return (this->_shape);
 }
 
 t_light const   &World::getLight(void) const {
     return (this->_light);
 }
 
-vector<Sphere> const  &World::getObjects(void) const {
-    return (this->_spheres);
+shapeList const  &World::getShapes(void) const {
+    return (this->_shape);
 }
 
 bool    World::isShadowed(Point const &point) const {
@@ -58,19 +61,19 @@ bool    World::isShadowed(Point const &point) const {
 
 World   defaultWorld(void) {
     t_light light = pointLight(point(-10, 10, -10), color(1, 1, 1));
-    Sphere  s1 = Sphere();
-    Sphere  s2 = Sphere();
+    shapePtr  s1 = make_unique<Sphere>();
+    shapePtr  s2 = make_unique<Sphere>();
     t_material  m = t_material();
     World   world;
 
     m.colour = color(0.8, 1.0, 0.6);
     m.diffuse = 0.7;
     m.specular = 0.2;
-    s1.setMaterial(m);
-    s2.setTransform(Matrix().setIdentity().scale(0.5, 0.5, 0.5));
+    s1->setMaterial(m);
+    s2->setTransform(Matrix().setIdentity().scale(0.5, 0.5, 0.5));
     world.setLight(light);
-    world.addObject(s1);
-    world.addObject(s2);
+    world.addShape(move(s1));
+    world.addShape(move(s2));
     return (world);
 }
 

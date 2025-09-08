@@ -29,7 +29,7 @@ SUITE(CREATING_RAYS) {
         t_ray   r = ray(point(0, 0, -5), vec(0, 0, 1));
         Sphere  s =  Sphere();
 
-        t_intersect xs = intersect(s, r);
+        t_intersect xs = s.intersect(r);
 
         CHECK(xs.count == 2);
         CHECK(xs.intersections[0].t == 4.0);
@@ -41,7 +41,7 @@ SUITE(CREATING_RAYS) {
         t_ray   r = ray(point(0, 1, -5), vec(0, 0, 1));
         Sphere  s = Sphere();
 
-        t_intersect xs = intersect(s, r);
+        t_intersect xs = s.intersect(r);
 
         CHECK(xs.count == 2);
         CHECK(xs.intersections[0].t == 5.0);
@@ -53,7 +53,7 @@ SUITE(CREATING_RAYS) {
         t_ray   r = ray(point(0, 2, -5), vec(0, 0, 1));
         Sphere  s = Sphere();
 
-        t_intersect xs = intersect(s, r);
+        t_intersect xs = s.intersect(r);
 
         CHECK(xs.count == 0);
     }
@@ -62,7 +62,7 @@ SUITE(CREATING_RAYS) {
         t_ray   r = ray(point(0, 0, 0), vec(0, 0, 1));
         Sphere  s = Sphere();
 
-        t_intersect xs = intersect(s, r);
+        t_intersect xs = s.intersect(r);
 
         CHECK(xs.count == 2);
         CHECK(xs.intersections[0].t == -1.0);
@@ -73,7 +73,7 @@ SUITE(CREATING_RAYS) {
         t_ray   r = ray(point(0, 0, 5), vec(0, 0, 1));
         Sphere  s = Sphere();
 
-        t_intersect xs = intersect(s, r);
+        t_intersect xs = s.intersect(r);
 
         CHECK(xs.count == 2);
         CHECK(xs.intersections[0].t == -6.0);
@@ -86,25 +86,25 @@ SUITE(CREATING_RAYS) {
         t_intersection i = intersection(3.5, s);
 
         CHECK(i.t == 3.5);
-        CHECK(i.object == s);
+        CHECK(*i.shape == s);
     }
 
     TEST(intersect_sets_object_on_intersection) {
         Sphere    s = Sphere();
         t_ray     r = ray(point(0, 0, -5), vec(0,0,1));
 
-        auto xs = intersect(s, r);
+        auto xs = s.intersect(r);
 
         CHECK(xs.count == 2);
-        CHECK(xs.intersections[0].object == s);
-        CHECK(xs.intersections[1].object == s);
+        CHECK(*xs.intersections[0].shape == s);
+        CHECK(*xs.intersections[1].shape == s);
 
     }
 
     TEST(hit_when_all_t_are_positive) {
         Sphere  s = Sphere();
-        t_intersection  i1{1, s};
-        t_intersection  i2{2, s};
+        t_intersection  i1{1, &s};
+        t_intersection  i2{2, &s};
 
         t_intersect xs;
 
@@ -118,8 +118,8 @@ SUITE(CREATING_RAYS) {
 
     TEST(hit_when_some_t_are_negative) {
         Sphere  s = Sphere();
-        t_intersection  i1{-1, s};
-        t_intersection  i2{1, s};
+        t_intersection  i1{-1, &s};
+        t_intersection  i2{1, &s};
 
         t_intersect xs;
 
@@ -133,8 +133,8 @@ SUITE(CREATING_RAYS) {
 
     TEST(hit_when_all_t_are_negative) {
         Sphere  s = Sphere();
-        t_intersection  i1{-2, s};
-        t_intersection  i2{-1, s};
+        t_intersection  i1{-2, &s};
+        t_intersection  i2{-1, &s};
 
         t_intersect xs;
 
@@ -148,10 +148,10 @@ SUITE(CREATING_RAYS) {
 
     TEST(hit_is_always_the_lowest_negative_value) {
         Sphere  s = Sphere();
-        t_intersection  i1{5, s};
-        t_intersection  i2{7, s};
-        t_intersection  i3{-3, s};
-        t_intersection  i4{2, s};
+        t_intersection  i1{5, &s};
+        t_intersection  i2{7, &s};
+        t_intersection  i3{-3, &s};
+        t_intersection  i4{2, &s};
 
         t_intersect xs;
 
@@ -211,7 +211,7 @@ SUITE(CREATING_RAYS) {
 
         s.setTransform(scaling(2, 2, 2));
 
-        t_intersect xs = intersect(s, r);
+        t_intersect xs = s.intersect(r);
 
         CHECK(xs.count == 2);
         CHECK(xs.intersections[0].t == 3);
@@ -224,7 +224,7 @@ SUITE(CREATING_RAYS) {
 
         s.setTransform(translation(5, 0, 0));
 
-        t_intersect xs = intersect(s, r);
+        t_intersect xs = s.intersect(r);
 
         CHECK(xs.count == 0);
     }

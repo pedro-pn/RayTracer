@@ -21,14 +21,14 @@ void    sphereDemo(void) {
         for (int j = 0; j < canva.getHeight(); j++) {
             world_y = half - (pixel_size * j );
             t_ray r = ray(origin, (point(world_x, world_y, wall_z) - origin).normalize());
-            t_intersect xs = intersect(s, r);
+            t_intersect xs = s.intersect(r);
             if (xs.count > 0) {
                 auto inter = hit(xs);
                 Point   p = position(r, inter->t);
-                Vec     normal = normalAt(inter->object, p);
+                Vec     normal = normalAt(*(inter->shape), p);
                 Vec     eye = -r.direction;
                 if (inter != nullopt) {
-                    canva.writePixel(i, j, lighting(inter->object.getMaterial(), light, p, eye, normal, false));
+                    canva.writePixel(i, j, lighting((*(inter->shape)).getMaterial(), light, p, eye, normal, false));
                 }
             }
         }

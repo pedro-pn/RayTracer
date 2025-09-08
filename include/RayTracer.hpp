@@ -10,20 +10,20 @@
 #include "Ray.hpp"
 #include "Light.hpp"
 #include "Camera.hpp"
+#include "Intersection.hpp"
 #include <vector>
 #include <memory>
 #include <optional>
 #include <algorithm>
 
-
 typedef struct s_computations {
-    double  t;
-    Sphere  object;
-    Point   point;
-    Point   overPoint;
-    Vec     eyev;
-    Vec     normalv;
-    bool    inside;
+    double        t;
+    Shape const  *shape;
+    Point         point;
+    Point         overPoint;
+    Vec           eyev;
+    Vec           normalv;
+    bool          inside;
 }               t_computations;
 
 // COMPUTATIONS

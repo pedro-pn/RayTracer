@@ -1,10 +1,16 @@
 #pragma once
 
-#include "Sphere.hpp"
-#include "Algebra.hpp"
 #include "Ray.hpp"
+#include "Shape.hpp"
 #include "Light.hpp"
-#include <algorithm>
+#include "Intersection.hpp"
+#include <memory>
+
+// typdef vector
+
+using shapeList = vector<unique_ptr<Shape>>;
+using shapePtr = unique_ptr<Shape>;
+
 
 class World {
 
@@ -13,19 +19,25 @@ class World {
         World();
         ~World();
 
-        t_intersect intersectWorld(t_ray const &ray) const;
-        void        setLight(t_light const &light);
-        void        addObject(Sphere const &sphere);
-        bool        isShadowed(Point const &point) const;
+        World(const World &) = delete;
+        World&  operator=(const World&) = delete;
 
-        t_light               &getLight(void);
-        vector<Sphere>        &getObjects(void);
-        t_light const         &getLight(void) const;
-        vector<Sphere> const  &getObjects(void) const;
+        World(World&&) noexcept = default;
+        World& operator=(World&&) noexcept = default;
+
+        t_intersect     intersectWorld(t_ray const &ray) const;
+        void            setLight(t_light const &light);
+        void            addShape(shapePtr shape);
+        bool            isShadowed(Point const &point) const;
+
+        t_light         &getLight(void);
+        t_light const   &getLight(void) const;
+        shapeList       &getShapes(void);
+        shapeList const &getShapes(void) const;
 
     private:
 
-        vector<Sphere>  _spheres;
+        shapeList       _shape;
         t_light         _light;
 };
 

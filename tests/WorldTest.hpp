@@ -20,8 +20,8 @@ SUITE(WORLD_TESTS) {
 		World   w = defaultWorld();
 
 		CHECK(w.getLight() == light);
-		CHECK(w.getObjects()[0] == s1);
-		CHECK(w.getObjects()[1] == s2);
+		CHECK(*w.getShapes()[0] == s1);
+		CHECK(*w.getShapes()[1] == s2);
 
 	}
 
@@ -45,7 +45,7 @@ SUITE(WORLD_TESTS) {
 		t_computations   comps = prepareComputations(inter, r);
 
 		CHECK(comps.t == inter.t);
-		CHECK(comps.object == inter.object);
+		CHECK(comps.shape == inter.shape);
 		CHECK(comps.point == point(0, 0, -1));
 		CHECK(comps.eyev == vec(0, 0, -1));
 		CHECK(comps.normalv == vec(0, 0, -1));
@@ -77,7 +77,7 @@ SUITE(WORLD_TESTS) {
 	TEST(shading_an_intersection) {
 		t_ray   r = ray(point(0, 0, -5), vec(0, 0, 1));
 		World   w = defaultWorld();
-		t_intersection  inter = intersection(4, w.getObjects()[0]);
+		t_intersection  inter = intersection(4, *w.getShapes()[0]);
 
 		
 		t_computations   comps = prepareComputations(inter, r);
@@ -93,7 +93,7 @@ SUITE(WORLD_TESTS) {
 		
 		
 		
-		t_intersection  inter = intersection(0.5, w.getObjects()[1]);
+		t_intersection  inter = intersection(0.5, *w.getShapes()[1]);
 		t_computations   comps = prepareComputations(inter, r);
 		Color   c = shadeHit(w, comps);
 
@@ -103,14 +103,14 @@ SUITE(WORLD_TESTS) {
 	TEST(shade_is_given_an_intersection_in_shadow) {
 		World	w;
 		w.setLight(pointLight(point(0, 0, -10), color(1, 1, 1)));
-		Sphere	s1;
-		Sphere	s2;
+		shapePtr	s1 = make_unique<Sphere>();
+		shapePtr	s2 = make_unique<Sphere>();
 
-		w.addObject(s1);
-		s2.getTransform().translate(0, 0, 10);
-		w.addObject(s2);
+		w.addShape(move(s1));
+		s2->getTransform().translate(0, 0, 10);
+		w.addShape(move(s2));
 		t_ray	r = ray(point(0, 0, 5), vec(0, 0, 1));
-		t_intersection inter = intersection(4, s2);
+		t_intersection inter = intersection(4, *w.getShapes()[1]);
 		t_computations comps = prepareComputations(inter, r);
 		Color c = shadeHit(w, comps);
 
@@ -150,14 +150,14 @@ SUITE(WORLD_TESTS) {
 	TEST(color_with_intersection_behind_the_ray) {
 		World   w = defaultWorld();
 
-		w.getObjects()[0].getMaterial().ambient = 1;
-		w.getObjects()[1].getMaterial().ambient = 1;
+		w.getShapes()[0]->getMaterial().ambient = 1;
+		w.getShapes()[1]->getMaterial().ambient = 1;
 
 		t_ray   r = ray(point(0, 0, 0.75), vec(0, 0, -1));
 
 		Color   c = colorAt(w, r);
 
-		CHECK(c ==  w.getObjects()[1].getMaterial().colour);
+		CHECK(c ==  w.getShapes()[1]->getMaterial().colour);
 	}
 
 	TEST(transformation_matrix_for_the_default_orientation) {

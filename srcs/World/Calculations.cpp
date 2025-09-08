@@ -4,9 +4,9 @@ t_computations  prepareComputations(t_intersection const &inter, t_ray const &ra
     t_computations comps;
 
     comps.t = inter.t;
-    comps.object = inter.object;
+    comps.shape = inter.shape;
     comps.point = position(ray, comps.t);
-    comps.normalv = normalAt(comps.object, comps.point);
+    comps.normalv = normalAt(*comps.shape, comps.point);
     comps.eyev = -ray.direction;
     
     if (dot(comps.normalv, comps.eyev) < 0) {
@@ -20,7 +20,7 @@ t_computations  prepareComputations(t_intersection const &inter, t_ray const &ra
 } 
 
 Color   shadeHit(World const &world, t_computations const &comps) {
-    return (lighting(comps.object.getMaterial(), world.getLight(), comps.overPoint, comps.eyev, comps.normalv, world.isShadowed(comps.overPoint)));
+    return (lighting(comps.shape->getMaterial(), world.getLight(), comps.overPoint, comps.eyev, comps.normalv, world.isShadowed(comps.overPoint)));
 }
 
 Color   colorAt(World const &world, t_ray const &ray) {
