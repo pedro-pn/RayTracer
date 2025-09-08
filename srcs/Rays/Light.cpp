@@ -1,13 +1,5 @@
 #include "RayTracer.hpp"
 
-Vec normalAt(Shape const &shape, Point const &worldPoint) {
-    Point   objectPoint = shape.getTransform().inverse() * worldPoint;
-    Vec     objectNormal = objectPoint - shape.getOrigin();
-    Vec     worldNormal = shape.getTransform().inverse().transpose() * objectNormal;
-    worldNormal.w = 0;
-    return (worldNormal.normalize());
-}
-
 Vec reflect(Vec const &incomingRay, Vec const &normal) {
     return (incomingRay - normal * 2 * dot(incomingRay, normal));
 }

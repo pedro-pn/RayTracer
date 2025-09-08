@@ -232,7 +232,7 @@ SUITE(CREATING_RAYS) {
     TEST(normal_on_a_sphere_at_point_on_x_axis) {
         Sphere  s = Sphere();
         
-        Vec     n = normalAt(s, point(1, 0 ,0));
+        Vec     n = s.normalAt(point(1, 0 ,0));
 
         CHECK(n == vec(1, 0, 0));
     }
@@ -240,7 +240,7 @@ SUITE(CREATING_RAYS) {
     TEST(normal_on_a_phere_at_point_on_y_axis) {
         Sphere  s = Sphere();
         
-        Vec     n = normalAt(s, point(0, 1 ,0));
+        Vec     n = s.normalAt(point(0, 1 ,0));
 
         CHECK(n == vec(0, 1, 0));
 
@@ -249,7 +249,7 @@ SUITE(CREATING_RAYS) {
     TEST(normal_on_a_phere_at_point_on_z_axis) {
         Sphere  s = Sphere();
         
-        Vec     n = normalAt(s, point(0, 0 ,1));
+        Vec     n = s.normalAt(point(0, 0 ,1));
 
         CHECK(n == vec(0, 0, 1));
     }
@@ -257,7 +257,7 @@ SUITE(CREATING_RAYS) {
     TEST(normal_on_a_phere_at_non_axial_point) {
         Sphere  s = Sphere();
         
-        Vec     n = normalAt(s, point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+        Vec     n = s.normalAt(point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
 
         CHECK(n == vec(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
 
@@ -266,7 +266,7 @@ SUITE(CREATING_RAYS) {
     TEST(normal_is_a_normalize_vector) {
         Sphere  s = Sphere();
         
-        Vec     n = normalAt(s, point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+        Vec     n = s.normalAt(point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
 
         CHECK(n == n.normalize());
     }
@@ -274,7 +274,7 @@ SUITE(CREATING_RAYS) {
     TEST(computing_normal_on_a_translated_sphere) {
         Sphere  s = Sphere();
         s.setTransform(Matrix().setIdentity().translate(0, 1, 0));
-        Vec     n = normalAt(s, point(0, 1.70711, -0.70711));
+        Vec     n = s.normalAt(point(0, 1.70711, -0.70711));
 
         CHECK(n == vec(0, 0.70711, -0.70711));
     }
@@ -282,7 +282,7 @@ SUITE(CREATING_RAYS) {
     TEST(computing_normal_on_a_transformed_sphere) {
         Sphere  s = Sphere();
         s.setTransform(Matrix().setIdentity().rotateZ(M_PI / 5).scale(1, 0.5, 1));
-        Vec     n = normalAt(s, point(0, sqrt(2) / 2, -sqrt(2) / 2));
+        Vec     n = s.normalAt(point(0, sqrt(2) / 2, -sqrt(2) / 2));
 
         CHECK(n == vec(0, 0.97014, -0.24254));
     }

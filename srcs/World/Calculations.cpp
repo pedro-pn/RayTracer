@@ -6,7 +6,7 @@ t_computations  prepareComputations(t_intersection const &inter, t_ray const &ra
     comps.t = inter.t;
     comps.shape = inter.shape;
     comps.point = position(ray, comps.t);
-    comps.normalv = normalAt(*comps.shape, comps.point);
+    comps.normalv = comps.shape->normalAt(comps.point);
     comps.eyev = -ray.direction;
     
     if (dot(comps.normalv, comps.eyev) < 0) {

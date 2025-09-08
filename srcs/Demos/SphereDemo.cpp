@@ -25,7 +25,7 @@ void    sphereDemo(void) {
             if (xs.count > 0) {
                 auto inter = hit(xs);
                 Point   p = position(r, inter->t);
-                Vec     normal = normalAt(*(inter->shape), p);
+                Vec     normal = inter->shape->normalAt(p);
                 Vec     eye = -r.direction;
                 if (inter != nullopt) {
                     canva.writePixel(i, j, lighting((*(inter->shape)).getMaterial(), light, p, eye, normal, false));

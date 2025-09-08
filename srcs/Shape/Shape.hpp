@@ -16,6 +16,7 @@ class Shape {
         // Shape   &operator=(Shape const &rhs);
 
         virtual t_intersect intersect(t_ray const &ray) const = 0;
+        virtual Vec         normalAt(Point const &worldPoint) const = 0;
 
         Matrix const          &getTransform() const;
         Matrix                &getTransform();

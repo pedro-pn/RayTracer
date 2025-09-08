@@ -27,3 +27,11 @@ t_intersect Sphere::intersect(t_ray const &r) const {
     xs.intersections.push_back(intersection(t2, *this));
     return (xs);
 }
+
+Vec Sphere::normalAt(Point const &worldPoint) const {
+    Point   objectPoint = this->getTransform().inverse() * worldPoint;
+    Vec     objectNormal = objectPoint - this->getOrigin();
+    Vec     worldNormal = this->getTransform().inverse().transpose() * objectNormal;
+    worldNormal.w = 0;
+    return (worldNormal.normalize());
+}
