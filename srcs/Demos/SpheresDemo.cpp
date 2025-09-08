@@ -70,7 +70,7 @@ static shapePtr   leftSphere(void) {
 }
 
 void    spheresDemo(void) {
-    Camera  cam(100, 50, M_PI / 3);
+    Camera  cam(1000, 500, M_PI / 3);
     World   world;
 
     cam.setTransform(viewTransformation(

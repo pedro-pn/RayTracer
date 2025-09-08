@@ -271,7 +271,7 @@ SUITE(CREATING_RAYS) {
         CHECK(n == n.normalize());
     }
 
-    TEST(computing_normal_on_a_translated_sphere) {
+    TEST(computing_normal_on_a_translated_spwhere) {
         Sphere  s = Sphere();
         s.setTransform(Matrix().setIdentity().translate(0, 1, 0));
         Vec     n = s.normalAt(point(0, 1.70711, -0.70711));

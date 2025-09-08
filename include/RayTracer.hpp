@@ -6,6 +6,7 @@
 #include "Canvas.hpp"
 #include "Material.hpp"
 #include "Sphere.hpp"
+#include "Plane.hpp"
 #include "World.hpp"
 #include "Ray.hpp"
 #include "Light.hpp"

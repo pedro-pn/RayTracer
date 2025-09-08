@@ -3,6 +3,7 @@
 #include "CanvasTest.hpp"
 #include "RaysTest.hpp"
 #include "WorldTest.hpp"
+#include "PlaneTest.hpp"
 
 int main() {
 
