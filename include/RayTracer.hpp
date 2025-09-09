@@ -39,3 +39,4 @@ Matrix          viewTransformation(Point const &from, Point const &to, Vec const
 void    clockDemo(void);
 void    sphereDemo(void);
 void    spheresDemo(void);
+void    planeDemo(void);
