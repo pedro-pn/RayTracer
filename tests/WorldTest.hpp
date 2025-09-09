@@ -106,9 +106,9 @@ SUITE(WORLD_TESTS) {
 		shapePtr	s1 = make_unique<Sphere>();
 		shapePtr	s2 = make_unique<Sphere>();
 
-		w.addShape(move(s1));
+		w.addShape(std::move(s1));
 		s2->getTransform().translate(0, 0, 10);
-		w.addShape(move(s2));
+		w.addShape(std::move(s2));
 		t_ray	r = ray(point(0, 0, 5), vec(0, 0, 1));
 		t_intersection inter = intersection(4, *w.getShapes()[1]);
 		t_computations comps = prepareComputations(inter, r);

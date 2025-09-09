@@ -28,7 +28,6 @@ class Shape {
 
     private:
 
-        Point     _origin;
         Matrix    _transform;
         t_material  _material;
 };

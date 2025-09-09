@@ -1,5 +1,6 @@
 #include "World.hpp"
 #include "Sphere.hpp"
+#include "Plane.hpp"
 #include <algorithm>
 
 World::World() {
@@ -24,7 +25,7 @@ void    World::setLight(t_light const &light) {
 }
 
 void    World::addShape(shapePtr shape) {
-    this->_shape.push_back(move(shape));
+    this->_shape.push_back(std::move(shape));
 }
 
 t_light         &World::getLight(void) {
@@ -72,8 +73,8 @@ World   defaultWorld(void) {
     s1->setMaterial(m);
     s2->setTransform(Matrix().setIdentity().scale(0.5, 0.5, 0.5));
     world.setLight(light);
-    world.addShape(move(s1));
-    world.addShape(move(s2));
+    world.addShape(std::move(s1));
+    world.addShape(std::move(s2));
     return (world);
 }
 

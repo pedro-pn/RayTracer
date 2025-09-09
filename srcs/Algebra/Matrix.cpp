@@ -8,7 +8,7 @@ void	Matrix::checkSize(int size) {
 		throw std::out_of_range("Matrix size must be 2, 3 or 4.");
 }
 
-Matrix::Matrix(int size) : _matrix{0}, _size(size) {
+Matrix::Matrix(int size) : _matrix{{0}}, _size(size) {
 	this->checkSize(size);
 }
 

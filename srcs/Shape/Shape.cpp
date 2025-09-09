@@ -1,6 +1,6 @@
 #include "Shape.hpp"
 
-Shape::Shape(): _origin(point(0, 0, 0)), _transform(Matrix().setIdentity()), _material(t_material()) {
+Shape::Shape(): _transform(Matrix().setIdentity()), _material(t_material()) {
 }
 
 Shape::~Shape() {
@@ -29,10 +29,6 @@ Matrix    &Shape::getTransform() {
 
 void    Shape::setTransform(Matrix const &transform) {
     this->_transform = transform;
-}
-
-Point   Shape::getOrigin(void) const {
-    return (this->_origin);
 }
 
 t_material const  &Shape::getMaterial(void) const {
