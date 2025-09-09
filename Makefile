@@ -44,7 +44,7 @@ val: m
 	 valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./${NAME_WILD}
 
 ${MAIN_TEST_OBJ}: ${MAIN_TEST}
-				@ ${CC} ${FLAGS} ${INCLUDE} -l UnitTest++ -c $< -o $@
+				@ ${CC} ${FLAGS} ${INCLUDE} -c $< -o $@
 
 tests: test
 		./${TEST}
