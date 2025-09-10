@@ -1,6 +1,6 @@
 #include "Stripe.hpp"
 
-Stripe::Stripe(Color const &colorOne, Color const &colorTwo) : _colorOne(colorOne), _colorTwo(colorTwo) {
+Stripe::Stripe(Color const &colorOne, Color const &colorTwo) : Pattern(colorOne, colorTwo) {
 }
 
 Color   Stripe::patternAt(Point const &point) const {

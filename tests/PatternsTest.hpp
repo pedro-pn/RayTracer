@@ -86,4 +86,19 @@ SUITE(PATTERNS_TEST) {
 
         CHECK(c == white());
     }
+    
+    TEST(gradient_linearly_interpolates_between_colors) {
+        t_material  m = t_material();
+        Sphere  s = Sphere();
+        m.pattern = make_shared<Gradient>(white(), black());
+        s.setMaterial(m);
+
+        CHECK(s.patternAt(point(0, 0, 0)) == white());
+        CHECK(s.patternAt(point(0.25, 0, 0)) == color(0.75, 0.75, 0.75));
+        CHECK(s.patternAt(point(0.5, 0, 0)) == color(0.5, 0.5, 0.5));
+        CHECK(s.patternAt(point(0.75, 0, 0)) == color(0.25, 0.25, 0.25));
+    }
+
+
+
 }

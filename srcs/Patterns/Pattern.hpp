@@ -6,7 +6,7 @@ class Pattern {
 
     public:
 
-        Pattern();
+        Pattern(Color const &colorOne, Color const &colorTwo);
         virtual ~Pattern() = default;
 
         virtual Color   patternAt(Point const &point) const = 0;
@@ -15,7 +15,9 @@ class Pattern {
         Matrix const    &getTransform(void) const;
         Matrix          &getTransform(void);
 
-    private:
+    protected:
 
         Matrix  _transform;
+        Color   _colorOne;
+        Color   _colorTwo;
 };

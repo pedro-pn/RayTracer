@@ -10,9 +10,4 @@ class Stripe: public Pattern {
         ~Stripe() = default;
 
         Color   patternAt(Point const &point) const override;
-
-    private:
-
-        Color   _colorOne;
-        Color   _colorTwo;
 };

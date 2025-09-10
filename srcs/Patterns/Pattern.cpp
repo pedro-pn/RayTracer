@@ -1,6 +1,6 @@
 #include "Pattern.hpp"
 
-Pattern::Pattern(void) {
+Pattern::Pattern(Color const &colorOne, Color const &colorTwo) : _colorOne(colorOne), _colorTwo(colorTwo) {
     _transform.setIdentity();
 }
 

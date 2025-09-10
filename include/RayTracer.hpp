@@ -13,6 +13,7 @@
 #include "Camera.hpp"
 #include "Intersection.hpp"
 #include "Stripe.hpp"
+#include "Gradient.hpp"
 #include <vector>
 #include <memory>
 #include <optional>
