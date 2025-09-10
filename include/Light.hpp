@@ -18,4 +18,4 @@ typedef struct s_light {
 
 Vec             reflect(Vec const &incomingRay, Vec const &normal);
 t_light         pointLight(Point const &position, Color const &intensity);
-Color           lighting(t_material const &material, t_light const &light, Point const &point, Vec const &eyev, Vec const &normalv, bool inShadow);
+Color           lighting(Shape const &shape, t_light const &light, Point const &point, Vec const &eyev, Vec const &normalv, bool inShadow);

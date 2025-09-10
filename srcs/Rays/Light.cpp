@@ -8,26 +8,26 @@ t_light pointLight(Point const &position, Color const &intensity) {
     return (t_light(position, intensity));
 }
 
-Color   lighting(t_material const &material, t_light const &light, Point const &point, Vec const &eyev, Vec const &normalv, bool inShadow) {
+Color   lighting(Shape const &shape, t_light const &light, Point const &point, Vec const &eyev, Vec const &normalv, bool inShadow) {
     Color    effectiveColor;
-    if (material.pattern)
-        effectiveColor = material.pattern->patternAt(point) * light.intensity;
+    if (shape.getMaterial().pattern)
+        effectiveColor = shape.patternAt(point) * light.intensity;
     else
-        effectiveColor = material.colour * light.intensity;
+        effectiveColor = shape.getMaterial().colour * light.intensity;
         
     Vec      lightVector = (light.position - point).normalize();
-    Color    ambient = material.ambient * effectiveColor;
+    Color    ambient = shape.getMaterial().ambient * effectiveColor;
     Color    specular = ColorUtils::black();
     Color    diffuse = ColorUtils::black();
 
    double  lightDotNormal = dot(lightVector, normalv);
-   if (lightDotNormal >= 0 && inShadow == false) {
-        diffuse = effectiveColor * material.diffuse * lightDotNormal;
+   if (lightDotNormal >= EPSILON && inShadow == false) {
+        diffuse = effectiveColor * shape.getMaterial().diffuse * lightDotNormal;
         Vec   reflectVector = reflect(-lightVector, normalv);
         double  reflectDotEye = dot(reflectVector, eyev);
-        if (reflectDotEye > 0) {
-            double factor = pow(reflectDotEye, material.shininess);
-            specular = light.intensity * material.specular * factor;
+        if (reflectDotEye > EPSILON) {
+            double factor = pow(reflectDotEye, shape.getMaterial().shininess);
+            specular = light.intensity * shape.getMaterial().specular * factor;
         }
     }
     return (ambient + diffuse + specular);

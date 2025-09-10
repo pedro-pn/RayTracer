@@ -35,19 +35,55 @@ SUITE(PATTERNS_TEST) {
     }
 
     TEST(lighting_with_a_pattern_applied) {
+        Sphere  s = Sphere();
         t_material  m = t_material();
         m.pattern = make_shared<Stripe>(white(), black());
         m.ambient = 1;
         m.diffuse = 0;
         m.specular = 0;
+        s.setMaterial(m);
         Vec eyev = vec(0, 0, -1);
         Vec normalv(vec(0, 0, -1));
         t_light light = pointLight(point(0, 0, -10), color(1, 1, 1));
 
-        Color   c1 = lighting(m, light, point(0.9, 0, 0), eyev, normalv, false);
-        Color   c2 = lighting(m, light, point(1.1, 0, 0), eyev, normalv, false);
+        Color   c1 = lighting(s, light, point(0.9, 0, 0), eyev, normalv, false);
+        Color   c2 = lighting(s, light, point(1.1, 0, 0), eyev, normalv, false);
 
         CHECK(c1 == color(1, 1, 1));
         CHECK(c2 == color(0, 0, 0));
+    }
+
+    TEST(stripes_with_an_object_transformation) {
+        t_material  m = t_material();
+        Sphere  s = Sphere();
+        s.setTransform(scaling(2, 2, 2));
+        m.pattern = make_shared<Stripe>(white(), black());
+        s.setMaterial(m);
+        Color   c = s.patternAt(point(1.5, 0, 0));
+        
+        CHECK(c == white());
+    }
+    
+    TEST(stripes_with_a_pattern_transformation) {
+        t_material  m = t_material();
+        Sphere  s = Sphere();
+        m.pattern = make_shared<Stripe>(white(), black());
+        m.pattern->setTransform(scaling(2, 2, 2));
+        s.setMaterial(m);
+        Color   c = s.patternAt(point(1.5, 0, 0));
+
+        CHECK(c == white());
+    }
+    
+    TEST(stripes_with_both_pattern_and_object_transformation) {
+        t_material  m = t_material();
+        Sphere  s = Sphere();
+        s.setTransform(scaling(2, 2, 2));
+        m.pattern = make_shared<Stripe>(white(), black());
+        m.pattern->setTransform(translation(0.5, 0, 0));
+        s.setMaterial(m);
+        Color   c = s.patternAt(point(2.5, 0, 0));
+
+        CHECK(c == white());
     }
 }

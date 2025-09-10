@@ -28,7 +28,7 @@ void    sphereDemo(void) {
                 Vec     normal = inter->shape->normalAt(p);
                 Vec     eye = -r.direction;
                 if (inter != nullopt) {
-                    canva.writePixel(i, j, lighting((*(inter->shape)).getMaterial(), light, p, eye, normal, false));
+                    canva.writePixel(i, j, lighting((*(inter->shape)), light, p, eye, normal, false));
                 }
             }
         }
