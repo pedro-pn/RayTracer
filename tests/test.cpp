@@ -4,6 +4,7 @@
 #include "RaysTest.hpp"
 #include "WorldTest.hpp"
 #include "PlaneTest.hpp"
+#include "PatternsTest.hpp"
 
 int main() {
 

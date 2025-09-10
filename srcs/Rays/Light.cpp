@@ -9,13 +9,18 @@ t_light pointLight(Point const &position, Color const &intensity) {
 }
 
 Color   lighting(t_material const &material, t_light const &light, Point const &point, Vec const &eyev, Vec const &normalv, bool inShadow) {
-   Color    effectiveColor = material.colour * light.intensity;
-   Vec      lightVector = (light.position - point).normalize();
-   Color    ambient = material.ambient * effectiveColor;
-   Color    specular = ColorUtils::black();
-   Color    diffuse = ColorUtils::black();
+    Color    effectiveColor;
+    if (material.pattern)
+        effectiveColor = material.pattern->patternAt(point) * light.intensity;
+    else
+        effectiveColor = material.colour * light.intensity;
+        
+    Vec      lightVector = (light.position - point).normalize();
+    Color    ambient = material.ambient * effectiveColor;
+    Color    specular = ColorUtils::black();
+    Color    diffuse = ColorUtils::black();
 
-   double   lightDotNormal = dot(lightVector, normalv);
+   double  lightDotNormal = dot(lightVector, normalv);
    if (lightDotNormal >= 0 && inShadow == false) {
         diffuse = effectiveColor * material.diffuse * lightDotNormal;
         Vec   reflectVector = reflect(-lightVector, normalv);

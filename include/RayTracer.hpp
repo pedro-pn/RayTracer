@@ -12,6 +12,7 @@
 #include "Light.hpp"
 #include "Camera.hpp"
 #include "Intersection.hpp"
+#include "Stripe.hpp"
 #include <vector>
 #include <memory>
 #include <optional>
