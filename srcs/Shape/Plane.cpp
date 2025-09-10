@@ -17,5 +17,5 @@ t_intersect         Plane::intersect(t_ray const &r) const {
 
 Vec Plane::normalAt(Point const &worldPoint) const {
     (void)worldPoint;
-    return (vec(0, 1, 0));
+    return (_normalToWorld(vec(0, 1, 0)));
 }

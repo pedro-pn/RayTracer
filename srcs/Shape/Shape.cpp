@@ -42,3 +42,16 @@ t_material  &Shape::getMaterial(void) {
 void    Shape::setMaterial(t_material const &material) {
     this->_material = material;
 }
+
+Color   Shape::patternAt(Point const &worldPoint) const {
+    Point   objectPoint = _transform.inverse() * worldPoint;
+    Point   patternPoint = _material.pattern->getTransform().inverse() * objectPoint;
+
+    return (this->_material.pattern->patternAt(patternPoint));
+}
+
+Vec Shape::_normalToWorld(Vec const &normal) const {
+    Vec worldNormal = _transform.transpose().inverse() * normal;
+    worldNormal.w = 0;
+    return (worldNormal.normalize());
+}

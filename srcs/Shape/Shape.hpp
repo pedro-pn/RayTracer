@@ -21,14 +21,17 @@ class Shape {
         Matrix const          &getTransform() const;
         Matrix                &getTransform();
         void                   setTransform(Matrix const &transform);
-        Point                  getOrigin(void) const;
         t_material            &getMaterial(void);
         t_material const      &getMaterial(void) const;
         void                   setMaterial(t_material const &material);
+        Color                  patternAt(Point const &worldPoint) const;
 
     private:
 
         Matrix    _transform;
         t_material  _material;
+        
+    protected:
+        
+        Vec _normalToWorld(Vec const &normal) const;
 };
-

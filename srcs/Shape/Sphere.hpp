@@ -16,4 +16,3 @@ class Sphere: public Shape {
 
         Point     _origin;
 };
-

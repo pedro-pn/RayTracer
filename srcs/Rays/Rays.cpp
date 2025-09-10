@@ -23,10 +23,10 @@ optional<t_intersection>    hit(t_intersect &xs) {
 
     sort(xs.intersections.begin(), xs.intersections.end());
     for (auto it = xs.intersections.begin();  it != xs.intersections.end(); it++ ) {
-        if ((*it).t >= EPSILON)
+        if ((*it).t >= 0) 
             return (*it);
     }
-
+    
     return (nullopt);
 }
 
