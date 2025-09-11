@@ -9,5 +9,5 @@ class Ring: public Pattern {
         Ring(Color const &colorOne, Color const &colorTwo);
         ~Ring() = default;
 
-        Color   patternAt(Point const &worldPoint) const;
+        Color   patternAt(Point const &worldPoint) const override;
 };
