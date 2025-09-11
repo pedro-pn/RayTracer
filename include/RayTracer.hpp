@@ -14,6 +14,7 @@
 #include "Intersection.hpp"
 #include "Stripe.hpp"
 #include "Gradient.hpp"
+#include "Checker.hpp"
 #include "Ring.hpp"
 #include <vector>
 #include <memory>

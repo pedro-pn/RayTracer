@@ -110,5 +110,38 @@ SUITE(PATTERNS_TEST) {
         CHECK(s.patternAt(point(0, 0, 1)) == black());
         CHECK(s.patternAt(point(0.708, 0, 0.708)) == black());
     }
+    
+    TEST(checkers_should_repeat_in_x) {
+        t_material  m = t_material();
+        Sphere  s = Sphere();
+        m.pattern = make_shared<Checker>(white(), black());
+        s.setMaterial(m);
+
+        CHECK(s.patternAt(point(0, 0, 0)) == white());
+        CHECK(s.patternAt(point(0.99, 0, 0)) == white());
+        CHECK(s.patternAt(point(1.01, 0, 0)) == black());
+    }
+    
+    TEST(checkers_should_repeat_in_y) {
+        t_material  m = t_material();
+        Sphere  s = Sphere();
+        m.pattern = make_shared<Checker>(white(), black());
+        s.setMaterial(m);
+
+        CHECK(s.patternAt(point(0, 0, 0)) == white());
+        CHECK(s.patternAt(point(0, 0.99, 0)) == white());
+        CHECK(s.patternAt(point(0, 1.01, 0)) == black());
+    }
+    
+    TEST(checkers_should_repeat_in_z) {
+        t_material  m = t_material();
+        Sphere  s = Sphere();
+        m.pattern = make_shared<Checker>(white(), black());
+        s.setMaterial(m);
+
+        CHECK(s.patternAt(point(0, 0, 0)) == white());
+        CHECK(s.patternAt(point(0, 0, 0.99)) == white());
+        CHECK(s.patternAt(point(0, 0, 1.01)) == black());
+    }
 
 }
