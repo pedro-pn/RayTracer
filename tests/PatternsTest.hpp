@@ -98,7 +98,17 @@ SUITE(PATTERNS_TEST) {
         CHECK(s.patternAt(point(0.5, 0, 0)) == color(0.5, 0.5, 0.5));
         CHECK(s.patternAt(point(0.75, 0, 0)) == color(0.25, 0.25, 0.25));
     }
+    
+    TEST(ring_should_extend_in_both_x_and_z) {
+        t_material  m = t_material();
+        Sphere  s = Sphere();
+        m.pattern = make_shared<Ring>(white(), black());
+        s.setMaterial(m);
 
-
+        CHECK(s.patternAt(point(0, 0, 0)) == white());
+        CHECK(s.patternAt(point(1, 0, 0)) == black());
+        CHECK(s.patternAt(point(0, 0, 1)) == black());
+        CHECK(s.patternAt(point(0.708, 0, 0.708)) == black());
+    }
 
 }
