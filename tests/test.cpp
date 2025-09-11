@@ -5,6 +5,7 @@
 #include "WorldTest.hpp"
 #include "PlaneTest.hpp"
 #include "PatternsTest.hpp"
+#include "RefractReflectTests.hpp"
 
 int main() {
 

@@ -81,7 +81,7 @@ SUITE(WORLD_TESTS) {
 
 		
 		t_computations   comps = prepareComputations(inter, r);
-		Color   c = shadeHit(w, comps);
+		Color   c = shadeHit(w, comps, REMAINING);
 
 		CHECK(c == color(0.38066, 0.47583, 0.2855));
 	}
@@ -95,7 +95,7 @@ SUITE(WORLD_TESTS) {
 		
 		t_intersection  inter = intersection(0.5, *w.getShapes()[1]);
 		t_computations   comps = prepareComputations(inter, r);
-		Color   c = shadeHit(w, comps);
+		Color   c = shadeHit(w, comps, REMAINING);
 
 		CHECK(c == color(0.90498, 0.90498, 0.90498));
 	}
@@ -112,7 +112,7 @@ SUITE(WORLD_TESTS) {
 		t_ray	r = ray(point(0, 0, 5), vec(0, 0, 1));
 		t_intersection inter = intersection(4, *w.getShapes()[1]);
 		t_computations comps = prepareComputations(inter, r);
-		Color c = shadeHit(w, comps);
+		Color c = shadeHit(w, comps, REMAINING);
 
 		CHECK(c == color(0.1, 0.1, 0.1));
 	}
@@ -133,7 +133,7 @@ SUITE(WORLD_TESTS) {
 		World   w = defaultWorld();
 		t_ray   r = ray(point(0, 0, -5), vec(0, 1, 0));
 
-		Color   c = colorAt(w, r);
+		Color   c = colorAt(w, r, REMAINING);
 
 		CHECK(c == color(0, 0, 0));
 	}
@@ -142,7 +142,7 @@ SUITE(WORLD_TESTS) {
 		World   w = defaultWorld();
 		t_ray   r = ray(point(0, 0, -5), vec(0, 0, 1));
 
-		Color   c = colorAt(w, r);
+		Color   c = colorAt(w, r, REMAINING);
 
 		CHECK(c == color(0.38066, 0.47583, 0.2855));
 	}
@@ -155,7 +155,7 @@ SUITE(WORLD_TESTS) {
 
 		t_ray   r = ray(point(0, 0, 0.75), vec(0, 0, -1));
 
-		Color   c = colorAt(w, r);
+		Color   c = colorAt(w, r, REMAINING);
 
 		CHECK(c ==  w.getShapes()[1]->getMaterial().colour);
 	}

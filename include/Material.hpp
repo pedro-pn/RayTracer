@@ -16,8 +16,9 @@ typedef struct s_material {
     double      diffuse;
     double      specular;
     double      shininess;
+    double      reflective;
 
-    s_material() : colour(color(1, 1, 1)), pattern(nullptr), ambient(0.1), diffuse(0.9), specular(0.9), shininess(200.0) {}
+    s_material() : colour(color(1, 1, 1)), pattern(nullptr), ambient(0.1), diffuse(0.9), specular(0.9), shininess(200.0), reflective(0.0) {}
     bool    operator==(struct s_material const &rhs) const {
         return (this->colour == rhs.colour && 
             this->ambient == rhs.ambient &&

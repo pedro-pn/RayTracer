@@ -21,6 +21,8 @@
 #include <optional>
 #include <algorithm>
 
+#define REMAINING 4
+
 typedef struct s_computations {
     double        t;
     Shape const  *shape;
@@ -29,14 +31,16 @@ typedef struct s_computations {
     Vec           eyev;
     Vec           normalv;
     bool          inside;
+    Vec           reflectv;
 }               t_computations;
 
 // COMPUTATIONS
 
 t_computations  prepareComputations(t_intersection const &inter, t_ray const &ray);
-Color           shadeHit(World const &world, t_computations const &comps);
-Color           colorAt(World const &world, t_ray const &ray);
+Color           shadeHit(World const &world, t_computations const &comps, int remaining);
+Color           colorAt(World const &world, t_ray const &ray, int remaining);
 Matrix          viewTransformation(Point const &from, Point const &to, Vec const &up);
+Color           reflectedColor(World const &world, t_computations const &comps, int remaining);
 
 // DEMOS
 
