@@ -4,6 +4,7 @@ int	main() {
 	// clockDemo();
 	// sphereDemo();
 	// spheresDemo();
-	planeDemo();
+	// planeDemo();
+	testDemo();
 	return 0;
 }

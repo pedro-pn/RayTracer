@@ -44,3 +44,4 @@ void    clockDemo(void);
 void    sphereDemo(void);
 void    spheresDemo(void);
 void    planeDemo(void);
+void    testDemo(void);

@@ -50,3 +50,7 @@ Color	ColorUtils::pixelColorToColor(int colorPixel) {
 	double	blue = rgbToColor(_getBlue(colorPixel));
 	return (color(red, green, blue));
 }
+
+Color	ColorUtils::rgbToColorTuple(Color const &colorTuple) {
+	return (color(rgbToColor(colorTuple.x), rgbToColor(colorTuple.y), rgbToColor(colorTuple.z)));
+}

@@ -17,4 +17,5 @@ namespace ColorUtils {
 	Color	black(void);
 	Color	white(void);	
 	Color	pixelColorToColor(int color);
+	Color	rgbToColorTuple(Color const &colorTuple);
 }
