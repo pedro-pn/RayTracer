@@ -33,3 +33,12 @@ Vec Sphere::normalAt(Point const &worldPoint) const {
     Vec     objectNormal = objectPoint - this->_origin;
     return (_normalToWorld(objectNormal));
 }
+
+// MISC
+
+Sphere  glassSphere(void) {
+    Sphere s;
+    s.getMaterial().transparency = 1.0;
+    s.getMaterial().refractiveIndex = 1.5;
+    return (s);
+}

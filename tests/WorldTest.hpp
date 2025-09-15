@@ -42,7 +42,9 @@ SUITE(WORLD_TESTS) {
 		Sphere  s;
 		t_intersection  inter = intersection(4, s);
 
-		t_computations   comps = prepareComputations(inter, r);
+		t_intersect xs;
+		xs.count = 0;
+		t_computations   comps = prepareComputations(inter, r, xs);
 
 		CHECK(comps.t == inter.t);
 		CHECK(comps.shape == inter.shape);
@@ -56,7 +58,9 @@ SUITE(WORLD_TESTS) {
 		Sphere  s;
 		t_intersection  inter = intersection(4, s);
 
-		t_computations   comps = prepareComputations(inter, r);
+		t_intersect xs;
+		xs.count = 0;
+		t_computations   comps = prepareComputations(inter, r, xs);
 
 		CHECK(comps.inside == false);
 	}
@@ -66,7 +70,9 @@ SUITE(WORLD_TESTS) {
 		Sphere  s;
 		t_intersection  inter = intersection(1, s);
 
-		t_computations   comps = prepareComputations(inter, r);
+		t_intersect xs;
+		xs.count = 0;
+		t_computations   comps = prepareComputations(inter, r, xs);
 
 		CHECK(comps.point == point(0, 0, 1));
 		CHECK(comps.eyev == vec(0, 0, -1));
@@ -79,8 +85,9 @@ SUITE(WORLD_TESTS) {
 		World   w = defaultWorld();
 		t_intersection  inter = intersection(4, *w.getShapes()[0]);
 
-		
-		t_computations   comps = prepareComputations(inter, r);
+		t_intersect xs;
+		xs.count = 0;
+		t_computations   comps = prepareComputations(inter, r, xs);
 		Color   c = shadeHit(w, comps, REMAINING);
 
 		CHECK(c == color(0.38066, 0.47583, 0.2855));
@@ -91,10 +98,10 @@ SUITE(WORLD_TESTS) {
 		World   w = defaultWorld();
 		w.setLight(pointLight(point(0, 0.25, 0), color(1, 1, 1)));
 		
-		
-		
+		t_intersect xs;
+		xs.count = 0;
 		t_intersection  inter = intersection(0.5, *w.getShapes()[1]);
-		t_computations   comps = prepareComputations(inter, r);
+		t_computations   comps = prepareComputations(inter, r, xs);
 		Color   c = shadeHit(w, comps, REMAINING);
 
 		CHECK(c == color(0.90498, 0.90498, 0.90498));
@@ -111,7 +118,9 @@ SUITE(WORLD_TESTS) {
 		w.addShape(std::move(s2));
 		t_ray	r = ray(point(0, 0, 5), vec(0, 0, 1));
 		t_intersection inter = intersection(4, *w.getShapes()[1]);
-		t_computations comps = prepareComputations(inter, r);
+		t_intersect xs;
+		xs.count = 0;
+		t_computations comps = prepareComputations(inter, r, xs);
 		Color c = shadeHit(w, comps, REMAINING);
 
 		CHECK(c == color(0.1, 0.1, 0.1));
@@ -123,7 +132,9 @@ SUITE(WORLD_TESTS) {
 
 		s.getTransform().translate(0, 0, 1);
 		t_intersection	inter = intersection(5, s);
-		t_computations	comps = prepareComputations(inter, r);
+		t_intersect xs;
+		xs.count = 0;
+		t_computations	comps = prepareComputations(inter, r, xs);
 
 		CHECK(comps.overPoint.z < -EPSILON / 2);
 		CHECK(comps.point.z > comps.overPoint.z);

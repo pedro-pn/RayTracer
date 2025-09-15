@@ -5,6 +5,7 @@ static  shapePtr    floor(void) {
 
     floor->getTransform().translate(0, -1, 0);
     floor->getMaterial().colour = color(1, 1, 1);
+    floor->getMaterial().reflective = 0.3;
     floor->getMaterial().pattern = make_shared<Checker>(ColorUtils::white(), ColorUtils::rgbToColorTuple(color(0, 162, 232)));
     floor->getMaterial().pattern->getTransform().rotateY(M_PI / 4);
 
@@ -26,6 +27,7 @@ static shapePtr ball(void) {
     ball->getMaterial().colour = color(0, 0, 1);
     // ball->getMaterial().pattern = make_shared<Stripe>(color(0.5, 0, 0.7), ColorUtils::white());
     ball->getMaterial().pattern = make_shared<CheckerMap>(color(0.5, 0, 0.7), ColorUtils::white());
+    ball->getMaterial().reflective = 0.2;
     // ball->getMaterial().pattern->setTransform(scaling(0.2, 0.2, 0.2));
     // ball->getTransform().rotateX(-M_PI / 2);
     return (ball);

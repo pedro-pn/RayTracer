@@ -28,19 +28,24 @@ typedef struct s_computations {
     Shape const  *shape;
     Point         point;
     Point         overPoint;
+    Point         underPoint;
     Vec           eyev;
     Vec           normalv;
     bool          inside;
     Vec           reflectv;
+    double        n1;
+    double        n2;
 }               t_computations;
 
 // COMPUTATIONS
 
-t_computations  prepareComputations(t_intersection const &inter, t_ray const &ray);
+t_computations  prepareComputations(t_intersection const &inter, t_ray const &ray, t_intersect &xs);
 Color           shadeHit(World const &world, t_computations const &comps, int remaining);
 Color           colorAt(World const &world, t_ray const &ray, int remaining);
 Matrix          viewTransformation(Point const &from, Point const &to, Vec const &up);
 Color           reflectedColor(World const &world, t_computations const &comps, int remaining);
+Color           refractedColor(World const &world, t_computations const &comps, int remaining);
+double          schlick(t_computations const &comps);
 
 // DEMOS
 

@@ -16,3 +16,7 @@ class Sphere: public Shape {
 
         Point     _origin;
 };
+
+// MISC
+
+Sphere  glassSphere(void);
