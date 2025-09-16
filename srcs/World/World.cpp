@@ -55,7 +55,7 @@ bool    World::isShadowed(Point const &point) const {
 
     if (inter == nullopt)
         return (false);
-    if ((*inter).t < distance)
+    if ((*inter).t < distance && (*inter).shape->getMaterial().optShadow == true)
         return (true);
     return (false);
 }
