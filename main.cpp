@@ -5,6 +5,7 @@ int	main() {
 	// sphereDemo();
 	// spheresDemo();
 	// planeDemo();
-	testDemo();
+	// testDemo();
+	refractionDemo();
 	return 0;
 }
