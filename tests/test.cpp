@@ -6,6 +6,7 @@
 #include "PlaneTest.hpp"
 #include "PatternsTest.hpp"
 #include "RefractReflectTests.hpp"
+#include "CubeTest.hpp"
 
 int main() {
 

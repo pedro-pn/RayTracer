@@ -6,6 +6,7 @@
 #include "Canvas.hpp"
 #include "Material.hpp"
 #include "Sphere.hpp"
+#include "Cube.hpp"
 #include "Plane.hpp"
 #include "World.hpp"
 #include "Ray.hpp"
@@ -55,3 +56,4 @@ void    spheresDemo(void);
 void    planeDemo(void);
 void    testDemo(void);
 void    refractionDemo(void);
+void    cubeDemo(void);
