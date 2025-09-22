@@ -77,4 +77,3 @@ World   defaultWorld(void) {
     world.addShape(std::move(s2));
     return (world);
 }
-
