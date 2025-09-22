@@ -23,8 +23,9 @@ class Camera {
 		t_ray	rayForPixel(int px, int py) const;
 		Canvas	render(World const &world) const;
 		
-	private:
+		private:
 		
-       	Matrix  _transform;
+		Matrix  _transform;
+		void	_printProgress(int pixelRendered) const;
         
 };

@@ -1,5 +1,6 @@
 #include "Camera.hpp"
 #include <cmath>
+#include <iomanip>
 
 Camera::Camera(int hsize, int vsize, double fieldOfView) : hsize(hsize), vsize(vsize), fieldOfView(fieldOfView) {
     double  aspect;
@@ -43,14 +44,29 @@ t_ray   Camera::rayForPixel(int px, int py) const {
 
 Canvas  Camera::render(World const &world) const {
     Canvas  image(this->hsize, this->vsize);
+    int     rendered = 1;
     
     for (int y = 0; y < this->vsize; y++) {
         for (int x = 0; x < this->hsize; x++) {
             t_ray   ray = this->rayForPixel(x, y);
             Color   color = colorAt(world, ray, REMAINING);
             image.writePixel(x, y, color);
+            _printProgress(rendered);
+            rendered++;
         }
     }
 
     return (image);
+}
+
+void    Camera::_printProgress(int rendered) const {
+    int totalPixels = this->vsize * this->hsize;
+    double  progress = (double) rendered * 100.0 / (double) totalPixels;
+
+    cout << '\r';
+    cout << setprecision(2) << fixed << progress << '%';
+    cout.width(4);
+    if (totalPixels == rendered)
+        cout << '\n';
+    cout << flush;
 }
