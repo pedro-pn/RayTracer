@@ -7,7 +7,8 @@ int	main() {
 	// planeDemo();
 	// testDemo();
 	// refractionDemo();
-	cubeDemo();
+	// cubeDemo();
+	cover();
 
 	return (0);
 }

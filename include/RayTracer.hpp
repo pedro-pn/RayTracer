@@ -57,3 +57,4 @@ void    planeDemo(void);
 void    testDemo(void);
 void    refractionDemo(void);
 void    cubeDemo(void);
+void    cover(void);
