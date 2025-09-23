@@ -7,6 +7,7 @@
 #include "PatternsTest.hpp"
 #include "RefractReflectTests.hpp"
 #include "CubeTest.hpp"
+#include "CylinderTest.hpp"
 
 int main() {
 
