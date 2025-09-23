@@ -53,4 +53,42 @@ SUITE(CYLINDER_SUITE) {
         CHECK(cyl.normalAt(point(0, -2, 1)) == vec(0, 0, 1));
         CHECK(cyl.normalAt(point(-1, 1, 0)) == vec(-1, 0, 0));
     }
+
+    TEST(default_minimum_and_maximum_for_a_cylinder) {
+        Cylinder    cyl = Cylinder();
+
+        CHECK(areEqual(cyl.minimum, -INFINITY));
+        CHECK(areEqual(cyl.maximum, INFINITY));
+    }
+
+    TEST(intersecting_constrained_cylinder) {
+        Cylinder    cyl = Cylinder();
+
+        cyl.minimum = 1;
+        cyl.maximum = 2;
+
+        t_ray r = ray(point(0, 1.5, 0), vec(0.1, 1, 0).normalize());
+        t_intersect xs = cyl.intersect(r);
+        CHECK(xs.count == 0);
+
+        r = ray(point(0, 3, -5), vec(0, 0, 1).normalize());
+        xs = cyl.intersect(r);
+        CHECK(xs.count == 0);
+
+        r = ray(point(0, 0, -5), vec(0, 0, 1).normalize());
+        xs = cyl.intersect(r);
+        CHECK(xs.count == 0);
+
+        r = ray(point(0, 2, -5), vec(0, 0, 1).normalize());
+        xs = cyl.intersect(r);
+        CHECK(xs.count == 0);
+
+        r = ray(point(0, 1, -5), vec(0, 0, 1).normalize());
+        xs = cyl.intersect(r);
+        CHECK(xs.count == 0);
+
+        r = ray(point(0, 1.5, -2), vec(0, 0, 1).normalize());
+        xs = cyl.intersect(r);
+        CHECK(xs.count == 2);
+    }
 }

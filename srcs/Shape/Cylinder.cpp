@@ -1,5 +1,8 @@
 #include "Cylinder.hpp"
 
+Cylinder::Cylinder() : Shape(), minimum(-INFINITY), maximum(INFINITY) {
+}
+
 t_intersect Cylinder::intersect(t_ray const &ray) const {
     t_ray   transformedRay = transformRay(ray, this->getTransform().inverse());
     t_intersect xs;
@@ -14,12 +17,17 @@ t_intersect Cylinder::intersect(t_ray const &ray) const {
 
     if (discriminant < 0)
         return (xs);
-    xs.count = 2;
     double  t0 = ((-b - sqrt(discriminant)) / (2 * a));
     double  t1 = ((-b + sqrt(discriminant)) / (2 * a));
-    xs.intersections.push_back(intersection(t0, *this));
-    xs.intersections.push_back(intersection(t1, *this));
-
+    if (t0 > t1)
+        swap(t0, t1);
+    double  y0 = transformedRay.origin.y + t0 * transformedRay.direction.y;
+    if (minimum < y0 && y0 < maximum)
+        createIntersection(xs, intersection(t0, *this));
+    double  y1 = transformedRay.origin.y + t1 * transformedRay.direction.y;
+    if (minimum < y1 && y1 < maximum)
+        createIntersection(xs, intersection(t1, *this));
+        
     return (xs);
 }
 

@@ -15,16 +15,14 @@ t_intersect Sphere::intersect(t_ray const &r) const {
     double b = 2 * dot(transformedRay.direction, sphereToRay);
     double c = dot(sphereToRay, sphereToRay) - 1;
     double discriminant = (b * b) - 4 * a * c;
+    xs.count = 0;
 
-    if (discriminant < 0) {
-        xs.count = 0;
+    if (discriminant < 0)
         return (xs);
-    }
-    xs.count = 2;
     double t1 = ((-b - sqrt(discriminant))/(2 * a));
     double t2 = ((-b + sqrt(discriminant))/(2 * a));
-    xs.intersections.push_back(intersection(t1, *this));
-    xs.intersections.push_back(intersection(t2, *this));
+    createIntersection(xs, intersection(t1, *this));
+    createIntersection(xs, intersection(t2, *this));
     return (xs);
 }
 

@@ -34,3 +34,5 @@ typedef struct s_intersect {
 
 optional<t_intersection>    hit(t_intersect &xs);
 t_intersection              intersection(double t, Shape const &s);
+void                        createIntersection(t_intersect &xs, t_intersection &&inter);
+void                        createIntersection(t_intersect &xs, t_intersection &inter);

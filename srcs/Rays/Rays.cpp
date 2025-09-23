@@ -17,6 +17,16 @@ t_intersection  intersection(double t, Shape const &s) {
     return (inter);
 }
 
+void    createIntersection(t_intersect &xs, t_intersection &&inter) {
+    xs.count++;
+    xs.intersections.push_back(inter);
+}
+
+void    createIntersection(t_intersect &xs, t_intersection &inter) {
+    xs.count++;
+    xs.intersections.push_back(inter);
+}
+
 optional<t_intersection>    hit(t_intersect &xs) {
     if (xs.count == 0)
         return (nullopt);

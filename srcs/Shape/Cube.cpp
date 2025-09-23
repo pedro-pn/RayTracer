@@ -3,8 +3,6 @@
 t_intersect Cube::intersect(t_ray const &ray) const {
     t_ray          transformedRay = transformRay(ray, this->getTransform().inverse());
     t_intersect xs;
-    t_intersection i1;
-    t_intersection i2;
 
     t_cube_intersection_t  xIntersect = _checkAxis(transformedRay.origin.x, transformedRay.direction.x);
     t_cube_intersection_t  yIntersect = _checkAxis(transformedRay.origin.y, transformedRay.direction.y);
@@ -16,11 +14,8 @@ t_intersect Cube::intersect(t_ray const &ray) const {
 
     if (tmin > tmax)
         return (xs);
-    i1 = intersection(tmin, *this);
-    i2 = intersection(tmax, *this);
-    xs.count = 2;
-    xs.intersections.push_back(i1);
-    xs.intersections.push_back(i2);
+    createIntersection(xs, intersection(tmin, *this));
+    createIntersection(xs, intersection(tmax, *this));
 
     return (xs);
 }
