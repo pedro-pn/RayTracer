@@ -22,12 +22,14 @@ class Cylinder: public Shape {
         void         opened(void);
 
         
-    private:
+    protected:
     
         bool    _isClosed;
         double  _minimum;
         double  _maximum;
 
+    private:
+    
         bool    _checkCap(t_ray const &ray, double t) const;
         void    _intersectCaps(t_ray const &ray, t_intersect &xs) const;
         void    _intersectWalls(t_ray const &ray, t_intersect &xs) const;

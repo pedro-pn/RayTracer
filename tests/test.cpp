@@ -8,6 +8,7 @@
 #include "RefractReflectTests.hpp"
 #include "CubeTest.hpp"
 #include "CylinderTest.hpp"
+#include "ConeTest.hpp"
 
 int main() {
 

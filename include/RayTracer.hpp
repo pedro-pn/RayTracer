@@ -9,6 +9,7 @@
 #include "Cube.hpp"
 #include "Plane.hpp"
 #include "Cylinder.hpp"
+#include "Cone.hpp"
 #include "World.hpp"
 #include "Ray.hpp"
 #include "Light.hpp"
