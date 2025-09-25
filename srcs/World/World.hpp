@@ -6,12 +6,6 @@
 #include "Intersection.hpp"
 #include <memory>
 
-// typdef vector
-
-using shapeList = vector<unique_ptr<Shape>>;
-using shapePtr = unique_ptr<Shape>;
-
-
 class World {
 
     public:

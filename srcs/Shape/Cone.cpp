@@ -66,7 +66,7 @@ t_intersect Cone::intersect(t_ray const &ray) const {
 }
 
 Vec Cone::normalAt(Point const &worldPoint) const {
-    Point   objectPoint = this->getTransform().inverse() * worldPoint;
+    Point   objectPoint = this->_worldToObject(worldPoint);
     double  dist = pow(objectPoint.x, 2) + pow(objectPoint.z, 2);
 
     if (dist < 1 && objectPoint.y >= (_maximum - EPSILON))

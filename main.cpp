@@ -8,7 +8,8 @@ int	main() {
 	// testDemo();
 	// refractionDemo();
 	// cubeDemo();
-	cover();
+	// cover();
+	groupDemo();
 
 	return (0);
 }

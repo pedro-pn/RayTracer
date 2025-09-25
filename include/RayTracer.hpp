@@ -10,6 +10,7 @@
 #include "Plane.hpp"
 #include "Cylinder.hpp"
 #include "Cone.hpp"
+#include "Group.hpp"
 #include "World.hpp"
 #include "Ray.hpp"
 #include "Light.hpp"
@@ -60,3 +61,4 @@ void    testDemo(void);
 void    refractionDemo(void);
 void    cubeDemo(void);
 void    cover(void);
+void    groupDemo(void);

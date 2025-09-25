@@ -1,6 +1,7 @@
 #include "Shape.hpp"
+#include "Group.hpp"
 
-Shape::Shape(): _transform(Matrix().setIdentity()), _material(t_material()) {
+Shape::Shape(): _transform(Matrix().setIdentity()), _material(t_material()), _parent(nullptr) {
 }
 
 Shape::~Shape() {
@@ -44,7 +45,7 @@ void    Shape::setMaterial(t_material const &material) {
 }
 
 Color   Shape::patternAt(Point const &worldPoint) const {
-    Point   objectPoint = _transform.inverse() * worldPoint;
+    Point   objectPoint = this->_worldToObject(worldPoint);
     Point   patternPoint = _material.pattern->getTransform().inverse() * objectPoint;
 
     return (this->_material.pattern->patternAt(patternPoint));
@@ -53,5 +54,26 @@ Color   Shape::patternAt(Point const &worldPoint) const {
 Vec Shape::_normalToWorld(Vec const &normal) const {
     Vec worldNormal = _transform.transpose().inverse() * normal;
     worldNormal.w = 0;
-    return (worldNormal.normalize());
+    worldNormal = worldNormal.normalize();
+
+    if (this->_parent)
+        worldNormal = this->_parent->_normalToWorld(worldNormal);
+    return (worldNormal);
+}
+
+void    Shape::setParent(Group const *group) {
+    this->_parent = group;
+}
+
+Group   const          *Shape::getParent(void) const {
+    return (this->_parent);
+}
+
+Point   Shape::_worldToObject(Point const &p) const {
+    Point point = p;
+
+    if (this->_parent)
+        point = this->_parent->_worldToObject(point);
+    
+    return (this->_transform.inverse() * point);
 }

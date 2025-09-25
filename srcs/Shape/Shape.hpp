@@ -5,6 +5,11 @@
 #include "Material.hpp"
 #include "Intersection.hpp"
 
+using shapeList = vector<unique_ptr<Shape>>;
+using shapePtr = unique_ptr<Shape>;
+
+class Group;
+
 class Shape {
 
     public:
@@ -24,14 +29,20 @@ class Shape {
         t_material            &getMaterial(void);
         t_material const      &getMaterial(void) const;
         void                   setMaterial(t_material const &material);
-        Color                  patternAt(Point const &worldPoint) const;
+        Color                  patternAt(Point const &patternPoint) const;
+        void                   setParent(Group const *group);
+        Group   const          *getParent(void) const;
 
-    private:
-
-        Matrix    _transform;
+        
+        private:
+        
+        Matrix      _transform;
         t_material  _material;
         
-    protected:
+        protected:
         
-        Vec _normalToWorld(Vec const &normal) const;
+        Vec            _normalToWorld(Vec const &normal) const;
+        Point          _worldToObject(Point const &p) const;
+
+        Group   const *_parent;
 };

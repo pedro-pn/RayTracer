@@ -27,7 +27,7 @@ t_intersect Sphere::intersect(t_ray const &r) const {
 }
 
 Vec Sphere::normalAt(Point const &worldPoint) const {
-    Point   objectPoint = this->getTransform().inverse() * worldPoint;
+    Point   objectPoint = this->_worldToObject(worldPoint);
     Vec     objectNormal = objectPoint - this->_origin;
     return (_normalToWorld(objectNormal));
 }

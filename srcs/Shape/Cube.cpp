@@ -40,7 +40,7 @@ t_cube_intersection_t  Cube::_checkAxis(double origin, double direction) const {
 }
 
 Vec Cube::normalAt(Point const &worldPoint) const {
-    Point   objectPoint = this->getTransform().inverse() * worldPoint;
+    Point   objectPoint = this->_worldToObject(worldPoint);
     Vec     normal;
 
     double  maxc = max(abs(objectPoint.x), max(abs(objectPoint.y), abs(objectPoint.z)));

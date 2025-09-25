@@ -9,6 +9,7 @@
 #include "CubeTest.hpp"
 #include "CylinderTest.hpp"
 #include "ConeTest.hpp"
+#include "GroupTest.hpp"
 
 int main() {
 
