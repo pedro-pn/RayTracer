@@ -10,6 +10,7 @@
 #include "CylinderTest.hpp"
 #include "ConeTest.hpp"
 #include "GroupTest.hpp"
+#include "BoundingBoxTest.hpp"
 
 int main() {
 
