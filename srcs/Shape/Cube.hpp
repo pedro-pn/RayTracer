@@ -18,8 +18,5 @@ class Cube: public Shape {
         Vec normalAt(Point const &worldPoint) const override;
         BoundingBox boundsOf(void) const override;
 
-    private:
-
-        t_cube_intersection_t   _checkAxis(double origin, double direction) const;
-
+        static t_cube_intersection_t   _checkAxis(double origin, double direction, double min, double max);
 };

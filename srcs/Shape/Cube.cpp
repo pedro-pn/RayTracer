@@ -4,9 +4,9 @@ t_intersect Cube::intersect(t_ray const &ray) const {
     t_ray          transformedRay = transformRay(ray, this->getTransform().inverse());
     t_intersect xs;
 
-    t_cube_intersection_t  xIntersect = _checkAxis(transformedRay.origin.x, transformedRay.direction.x);
-    t_cube_intersection_t  yIntersect = _checkAxis(transformedRay.origin.y, transformedRay.direction.y);
-    t_cube_intersection_t  zIntersect = _checkAxis(transformedRay.origin.z, transformedRay.direction.z);
+    t_cube_intersection_t  xIntersect = _checkAxis(transformedRay.origin.x, transformedRay.direction.x, -1, 1);
+    t_cube_intersection_t  yIntersect = _checkAxis(transformedRay.origin.y, transformedRay.direction.y, -1, 1);
+    t_cube_intersection_t  zIntersect = _checkAxis(transformedRay.origin.z, transformedRay.direction.z, -1 , 1);
 
     double  tmin = max(xIntersect.tmin, max(yIntersect.tmin, zIntersect.tmin));
     double  tmax = min(xIntersect.tmax, min(yIntersect.tmax, zIntersect.tmax));
@@ -20,9 +20,9 @@ t_intersect Cube::intersect(t_ray const &ray) const {
     return (xs);
 }
 
-t_cube_intersection_t  Cube::_checkAxis(double origin, double direction) const {
-    double  tminNumerator = (-1 - origin);
-    double  tmaxNumerator = (1 - origin);
+t_cube_intersection_t  Cube::_checkAxis(double origin, double direction, double min, double max) {
+    double  tminNumerator = (min - origin);
+    double  tmaxNumerator = (max - origin);
     t_cube_intersection_t   ts;
 
     if (abs(direction) >= EPSILON) {
