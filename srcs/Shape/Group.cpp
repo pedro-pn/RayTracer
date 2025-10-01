@@ -13,6 +13,8 @@ t_intersect Group::intersect(t_ray const &ray) const {
     t_ray       r = transformRay(ray, this->getTransform().inverse());
 
     xs.count = 0;
+    if (boundsOf().intersect(r) == false)
+        return (xs);
     for (auto it = _children.begin(); it != _children.end(); it++) {
         xs += (*it)->intersect(r);
     }
