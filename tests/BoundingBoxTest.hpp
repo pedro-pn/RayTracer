@@ -188,4 +188,94 @@ SUITE(BOUNDING_BOX_SUITE) {
         CHECK(box.getMin() == point(-4.5, -3, -5));
         CHECK(box.getMax() == point(4, 7, 4.5));
     }
+
+    TEST(intersecting_a_ray_with_a_bounding_box_at_the_origin) {
+        BoundingBox box = BoundingBox(point(-1, -1, -1), point(1, 1, 1));
+        
+        t_ray   r;
+        
+        r = ray(point(5, 0.5, 0), vec(-1, 0, 0));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(-5, 0.5, 0), vec(1, 0, 0));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(0.5, 5, 0) , vec(0, -1, 0));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(0.5, -5, 0), vec(0, 1, 0));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(0.5, 0, 5) , vec(0, 0, -1));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(0.5, 0, -5), vec(0, 0, 1));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(0, 0.5, 0), vec(0, 0, 1) );
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(-2, 0, 0), vec(2, 4, 6));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(0, -2, 0), vec(6, 2, 4));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(0, 0, -2), vec(4, 6, 2));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(2, 0, 2), vec(0, 0, -1));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(0, 2, 2), vec(0, -1, 0));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(2, 2, 0), vec(-1, 0, 0));
+        CHECK(box.intersect(r) == false);
+    }
+
+    TEST(intersecting_a_ray_with_a_non_cubic_bounding_box) {
+        BoundingBox box = BoundingBox(point(5, -2, 0), point(11, 4, 7));
+        
+        t_ray   r;
+        
+        r = ray(point(15, 1, 2), vec(-1, 0, 0));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(-5, -1, 4), vec(1, 0, 0));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(7, 6, 5), vec(0, -1, 0));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(9, -5, 6), vec(0, 1, 0));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(8, 2, 12), vec(0, 0, -1));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(6, 0, -5), vec(0, 0, 1));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(8, 1, 3.5), vec(0, 0, 1));
+        CHECK(box.intersect(r) == true);
+        
+        r = ray(point(9, -1, -8), vec(2, 4, 6));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(8, 3, -4), vec(6, 2, 4));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(9, -1, -2), vec(4, 6, 2));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(4, 0, 9), vec(0, 0, -1));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(8, 6, -1), vec(0, -1, 0));
+        CHECK(box.intersect(r) == false);
+        
+        r = ray(point(12, 5, 4), vec(-1, 0, 0));
+        CHECK(box.intersect(r) == false);
+    }
 }

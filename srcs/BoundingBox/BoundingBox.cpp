@@ -1,4 +1,5 @@
 #include "BoundingBox.hpp"
+#include "Cube.hpp"
 
 BoundingBox::BoundingBox() : _min(point(INFINITY, INFINITY, INFINITY)), _max(point(-INFINITY, -INFINITY, -INFINITY)) {
 }
@@ -81,4 +82,17 @@ BoundingBox BoundingBox::transform(Matrix const &transform) const {
     box.addPoint(transform * p8);
 
     return (box);
+}
+
+bool BoundingBox::intersect(t_ray const &ray) const {
+    t_cube_intersection_t  xIntersect = Cube::_checkAxis(ray.origin.x, ray.direction.x, _min.x, _max.x);
+    t_cube_intersection_t  yIntersect = Cube::_checkAxis(ray.origin.y, ray.direction.y, _min.y, _max.y);
+    t_cube_intersection_t  zIntersect = Cube::_checkAxis(ray.origin.z, ray.direction.z, _min.z, _max.z);
+
+    double  tmin = max(xIntersect.tmin, max(yIntersect.tmin, zIntersect.tmin));
+    double  tmax = min(xIntersect.tmax, min(yIntersect.tmax, zIntersect.tmax));
+    if (tmin > tmax)
+        return (false);
+
+    return (true);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Algebra.hpp"
+#include "Ray.hpp"
 
 class BoundingBox {
 
@@ -22,6 +23,8 @@ class BoundingBox {
         void        addBox(BoundingBox const &box);
         bool        containsPoint(Point const &point) const;
         bool        containsBox(BoundingBox const &box) const;
+
+        bool        intersect(t_ray const &ray) const;
 
     private:
 
