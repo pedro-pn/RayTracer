@@ -32,6 +32,10 @@ Vec Sphere::normalAt(Point const &worldPoint) const {
     return (_normalToWorld(objectNormal));
 }
 
+BoundingBox Sphere::boundsOf(void) const {
+    return (BoundingBox(point(-1 , -1 , -1), point(1, 1, 1)));
+}
+
 // MISC
 
 Sphere  glassSphere(void) {

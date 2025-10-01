@@ -4,6 +4,7 @@
 #include "Ray.hpp"
 #include "Material.hpp"
 #include "Intersection.hpp"
+#include "BoundingBox.hpp"
 
 using shapeList = vector<unique_ptr<Shape>>;
 using shapePtr = unique_ptr<Shape>;
@@ -22,6 +23,9 @@ class Shape {
 
         virtual t_intersect intersect(t_ray const &ray) const = 0;
         virtual Vec         normalAt(Point const &worldPoint) const = 0;
+        virtual BoundingBox boundsOf(void) const = 0;
+
+        BoundingBox         parentSpaceBoundsOf(void) const;
 
         Matrix const          &getTransform() const;
         Matrix                &getTransform();

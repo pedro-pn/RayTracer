@@ -53,3 +53,7 @@ Vec Cube::normalAt(Point const &worldPoint) const {
 
     return (_normalToWorld(normal));
 }
+
+BoundingBox Cube::boundsOf(void) const {
+    return (BoundingBox(point(-1, -1, -1), point(1, 1, 1)));
+}

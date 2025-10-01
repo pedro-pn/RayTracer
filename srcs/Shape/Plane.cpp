@@ -18,3 +18,7 @@ Vec Plane::normalAt(Point const &worldPoint) const {
     (void)worldPoint;
     return (_normalToWorld(vec(0, 1, 0)));
 }
+
+BoundingBox Plane::boundsOf(void) const {
+    return (BoundingBox(point(-INFINITY, 0, -INFINITY), point(INFINITY, 0, INFINITY)));
+}

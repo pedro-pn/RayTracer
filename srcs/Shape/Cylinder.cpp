@@ -97,3 +97,7 @@ void    Cylinder::closed(void) {
 void    Cylinder::opened(void) {
     _isClosed = false;
 }
+
+BoundingBox Cylinder::boundsOf(void) const {
+    return (BoundingBox(point(-1, _minimum, -1), point(1, _maximum, 1)));
+}

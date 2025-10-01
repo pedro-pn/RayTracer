@@ -10,6 +10,7 @@ class Cone: public Cylinder {
 
     t_intersect intersect(t_ray const &ray) const override;
     Vec         normalAt(Point const &worldPoint) const override;
+    BoundingBox boundsOf(void) const override;
 
     private:
 

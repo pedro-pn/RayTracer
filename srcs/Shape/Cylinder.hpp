@@ -10,6 +10,7 @@ class Cylinder: public Shape {
 
         t_intersect intersect(t_ray const &ray) const override;
         Vec         normalAt(Point const &worldPoint) const override;
+        BoundingBox boundsOf(void) const override;
 
         bool      isClosed() const;
         double    getMinimum(void) const;

@@ -11,4 +11,5 @@ class Plane: public Shape {
 
         t_intersect         intersect(t_ray const &r) const override;
         Vec         normalAt(Point const &worldPoint) const override;
+        BoundingBox boundsOf(void) const override;
 };

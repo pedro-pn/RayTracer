@@ -29,3 +29,13 @@ void    Group::addChild(shapePtr shape) {
     shape->setParent(this);
     this->_children.push_back(std::move(shape));
 }
+
+BoundingBox Group::boundsOf(void) const {
+    BoundingBox box;
+
+    for (auto it = _children.begin(); it != _children.end(); it++) {
+        BoundingBox cbox = (*it)->parentSpaceBoundsOf();
+        box = box + cbox;
+    }
+    return (box);
+}

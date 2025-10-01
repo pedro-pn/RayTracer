@@ -79,3 +79,10 @@ Vec Cone::normalAt(Point const &worldPoint) const {
 
     return (_normalToWorld(vec(objectPoint.x, y, objectPoint.z)));
 }
+
+BoundingBox Cone::boundsOf(void) const {
+    double  a = abs(_minimum);
+    double  b = abs(_maximum);
+    double  limit = max(a, b);
+    return (BoundingBox(point(-limit, _minimum, -limit), point(limit, _maximum, limit)));
+}

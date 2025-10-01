@@ -77,3 +77,7 @@ Point   Shape::_worldToObject(Point const &p) const {
     
     return (this->_transform.inverse() * point);
 }
+
+BoundingBox         Shape::parentSpaceBoundsOf(void) const {
+    return (BoundingBox(this->boundsOf()).transform(_transform));
+}
