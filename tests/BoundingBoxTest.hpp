@@ -278,4 +278,163 @@ SUITE(BOUNDING_BOX_SUITE) {
         r = ray(point(12, 5, 4), vec(-1, 0, 0));
         CHECK(box.intersect(r) == false);
     }
+
+    TEST(splitting_a_perfect_cube) {
+        BoundingBox box = BoundingBox(point(-1, -4, -5), point(9, 6, 5));
+        t_splitted_box  boxes = box.splitBounds();
+
+        CHECK(boxes.left.getMin() == point(-1, -4, -5));
+        CHECK(boxes.left.getMax() == point(4, 6, 5));
+        CHECK(boxes.right.getMin() == point(4, -4, -5));
+        CHECK(boxes.right.getMax() == point(9, 6, 5));
+    }
+
+    TEST(splitting_an_x_wide_box) {
+        BoundingBox box = BoundingBox(point(-1, -2, -3), point(9, 5.5, 3));
+        t_splitted_box  boxes = box.splitBounds();
+
+        CHECK(boxes.left.getMin() == point(-1, -2, -3));
+        CHECK(boxes.left.getMax() == point(4, 5.5, 3));
+        CHECK(boxes.right.getMin() == point(4, -2, -3));
+        CHECK(boxes.right.getMax() == point(9, 5.5, 3));
+    }
+
+    TEST(splitting_an_y_wide_box) {
+        BoundingBox box = BoundingBox(point(-1, -2, -3), point(5, 8, 3));
+        t_splitted_box  boxes = box.splitBounds();
+
+        CHECK(boxes.left.getMin() == point(-1, -2, -3));
+        CHECK(boxes.left.getMax() == point(5, 3, 3));
+        CHECK(boxes.right.getMin() == point(-1, 3, -3));
+        CHECK(boxes.right.getMax() == point(5, 8, 3));
+    }
+
+    TEST(splitting_an_z_wide_box) {
+        BoundingBox box = BoundingBox(point(-1, -2, -3), point(5, 3, 7));
+        t_splitted_box  boxes = box.splitBounds();
+
+        CHECK(boxes.left.getMin() == point(-1, -2, -3));
+        CHECK(boxes.left.getMax() == point(5, 3, 2));
+        CHECK(boxes.right.getMin() == point(-1, -2, 2));
+        CHECK(boxes.right.getMax() == point(5, 3, 7));
+    }
+
+    TEST(Partitioning_a_groups_children) {
+        unique_ptr<Sphere> s1 = make_unique<Sphere>();
+        unique_ptr<Sphere> s2 = make_unique<Sphere>();
+        unique_ptr<Sphere> s3 = make_unique<Sphere>();
+
+        Sphere *s1Ptr = &*s1;
+        Sphere *s2Ptr = &*s2;
+        Sphere *s3Ptr = &*s3;
+
+        s1->setTransform(translation(-2, 0, 0));
+        s2->setTransform(translation(2, 0 ,0));
+        Group g = Group();
+
+        g.addChild(move(s1));
+        g.addChild(move(s2));
+        g.addChild(move(s3));
+
+        t_bucket bucket = g.partitionChildren();
+
+        CHECK(&*bucket.left[0] == s1Ptr);
+        CHECK(&*bucket.right[0] == s2Ptr);
+        CHECK(&*g[0] == s3Ptr);
+    }
+
+    TEST(creating_sub_group_from_a_list_of_children) {
+        unique_ptr<Sphere> s1 = make_unique<Sphere>();
+        unique_ptr<Sphere> s2 = make_unique<Sphere>();
+        Shape const *s1Ptr = &*s1;
+        Shape *s2Ptr = &*s2;
+        Group   g = Group();
+        shapeList   shapes;
+        shapes.push_back(move(s1));
+        shapes.push_back(move(s2));
+        g.makeSubgroup(shapes);
+
+        Shape const *result1 = dynamic_cast<Shape const *>((dynamic_cast<Group const *>(g[0]))->operator[](0));
+        Shape const *result2 = dynamic_cast<Shape const *>((dynamic_cast<Group const *>(g[0]))->operator[](1));
+        CHECK(g.count() == 1);
+        CHECK(result1 == s1Ptr);
+        CHECK(result2 == s2Ptr);
+    }
+
+    TEST(subdividing_a_primitive_does_nothing) {
+        Sphere s = Sphere();
+
+        s.divide();
+
+        CHECK(s == s);
+    }
+
+    TEST(subdividing_a_group_partitions_its_children) {
+        unique_ptr<Sphere> s1 = make_unique<Sphere>();
+        unique_ptr<Sphere> s2 = make_unique<Sphere>();
+        unique_ptr<Sphere> s3 = make_unique<Sphere>();
+
+        Shape const *s1Ptr = s1.get();
+        Shape const *s2Ptr = s2.get();
+        Shape const *s3Ptr = s3.get();
+        s1->setTransform(translation(-2, -2, 0));
+        s2->setTransform(translation(-2, 2, 0));
+        s3->setTransform(scaling(4, 4, 4));
+
+        Group g = Group();
+        g.addChild(move(s1));
+        g.addChild(move(s2));
+        g.addChild(move(s3));
+        g.divide(1);
+
+        CHECK(g[0] == s3Ptr);
+        Group const *subgroup1 = dynamic_cast<Group const *>(g[1]);
+        Group const *g2 = dynamic_cast<Group const *>(subgroup1->operator[](0));
+        Group const *g3 = dynamic_cast<Group const *>(subgroup1->operator[](1));
+        CHECK(subgroup1->count() == 2);
+        CHECK(g2->operator[](0) == s1Ptr);
+        CHECK(g3->operator[](0) == s2Ptr);
+    }
+
+    TEST(subdividing_a_group_with_too_few_children) {
+        unique_ptr<Sphere> s1 = make_unique<Sphere>();
+        unique_ptr<Sphere> s2 = make_unique<Sphere>();
+        unique_ptr<Sphere> s3 = make_unique<Sphere>();
+        unique_ptr<Sphere> s4 = make_unique<Sphere>();
+
+        Shape const *s1Ptr = s1.get();
+        Shape const *s2Ptr = s2.get();
+        Shape const *s3Ptr = s3.get();
+        Shape const *s4Ptr = s4.get();
+
+        s1->setTransform(translation(-2, 0, 0));
+        s2->setTransform(translation(2, 1, 0));
+        s3->setTransform(translation(2, -1, 0));
+
+        groupPtr  subGroup = make_unique<Group>();
+        Group const *subGroupPtr = subGroup.get();
+
+        subGroup->addChild(move(s1));
+        subGroup->addChild(move(s2));
+        subGroup->addChild(move(s3));
+
+        Group g = Group();
+        g.addChild(move(subGroup));
+        g.addChild(move(s4));
+
+        g.divide(3);
+
+        CHECK(g[0] == subGroupPtr);
+        CHECK(g[1] == s4Ptr);
+
+        Group  const *sub = dynamic_cast<Group const *>(g[0]);
+
+        CHECK(sub->count() == 2);
+        Group const *subsub1 = dynamic_cast<Group const *>(sub->operator[](0));
+        CHECK(subsub1->operator[](0) == s1Ptr);
+
+        Group const *subsub2 = dynamic_cast<Group const *>(sub->operator[](1));
+        CHECK(subsub2->operator[](0) == s2Ptr);
+        CHECK(subsub2->operator[](1) == s3Ptr);
+    }
 }

@@ -81,3 +81,7 @@ Point   Shape::_worldToObject(Point const &p) const {
 BoundingBox         Shape::parentSpaceBoundsOf(void) const {
     return (BoundingBox(this->boundsOf()).transform(_transform));
 }
+
+void Shape::divide(size_t threshold) {
+    (void)threshold;
+}

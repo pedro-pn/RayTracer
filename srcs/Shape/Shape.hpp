@@ -37,6 +37,8 @@ class Shape {
         void                   setParent(Group const *group);
         Group   const          *getParent(void) const;
 
+        virtual void                   divide(size_t threshold = 2);
+
         
         private:
         

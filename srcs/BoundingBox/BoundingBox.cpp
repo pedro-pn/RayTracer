@@ -96,3 +96,36 @@ bool BoundingBox::intersect(t_ray const &ray) const {
 
     return (true);
 }
+
+t_splitted_box  BoundingBox::splitBounds(void) const {
+    t_splitted_box  boxes;
+
+    double dx = _max.x - _min.x;
+    double dy = _max.y - _min.y;
+    double dz = _max.z - _min.z;
+
+    double greatest = max(dx, max(dy, dz));
+
+    double x0 = _min.x, y0 = _min.y, z0 = _min.z;
+    double x1 = _max.x, y1 = _max.y, z1 = _max.z;
+    if (areEqual(greatest, dx)) {
+        x0 = x0 + dx / 2.0;
+        x1 = x0;
+    }
+    else if (areEqual(greatest, dy)) {
+        y0 = y0 + dy / 2.0;
+        y1 = y0;
+    }
+    else {
+        z0 = z0 + dz / 2.0;
+        z1 = z0;
+    }
+    
+    Point   midMin = point(x0, y0, z0);
+    Point   midMax = point(x1, y1, z1);
+
+    boxes.left = BoundingBox(this->_min, midMax);
+    boxes.right = BoundingBox(midMin, this->_max);
+
+    return (boxes);
+}
