@@ -11,6 +11,7 @@
 #include "ConeTest.hpp"
 #include "GroupTest.hpp"
 #include "BoundingBoxTest.hpp"
+#include "TrianglesTest.hpp"
 
 int main() {
 

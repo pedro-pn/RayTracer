@@ -21,6 +21,7 @@
 #include "Checker.hpp"
 #include "Ring.hpp"
 #include "BoundingBox.hpp"
+#include "Triangle.hpp"
 #include <vector>
 #include <memory>
 #include <optional>
