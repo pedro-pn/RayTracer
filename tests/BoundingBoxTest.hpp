@@ -94,6 +94,14 @@ SUITE(BOUNDING_BOX_SUITE) {
         CHECK(box.getMax() == point(5, 3, 5));
     }
 
+    TEST(triangle_has_bounding_box) {
+        Triangle t = Triangle(point(-3, 7, 2), point(6, 2, -4), point(2, -1, -1));
+        BoundingBox box = t.boundsOf();
+
+        CHECK(box.getMin() == point(-3, -1, -4));
+        CHECK(box.getMax() == point(6, 7, 2));
+    }
+
     TEST(adding_one_bounding_box_to_another) {
         BoundingBox box1 = BoundingBox(point(-5, -2, 0), point(7, 4, 4));
         BoundingBox box2 = BoundingBox(point(8, -7, -2), point(14, 2, 8));

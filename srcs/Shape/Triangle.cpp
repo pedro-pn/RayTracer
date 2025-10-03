@@ -68,5 +68,9 @@ Vec         Triangle::normalAt(Point const &worldPoint) const {
 
 BoundingBox Triangle::boundsOf(void) const {
     BoundingBox box;
+
+    box.addPoint(_p1);
+    box.addPoint(_p2);
+    box.addPoint(_p3);
     return (box);
 }
